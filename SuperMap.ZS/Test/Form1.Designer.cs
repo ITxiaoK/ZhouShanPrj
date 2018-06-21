@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.btn_TestDataSource = new System.Windows.Forms.Button();
+            this.btnGetFTPData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_TestDataSource
@@ -41,11 +42,22 @@
             this.btn_TestDataSource.UseVisualStyleBackColor = true;
             this.btn_TestDataSource.Click += new System.EventHandler(this.btn_TestDataSource_Click);
             // 
+            // btnGetFTPData
+            // 
+            this.btnGetFTPData.Location = new System.Drawing.Point(40, 68);
+            this.btnGetFTPData.Name = "btnGetFTPData";
+            this.btnGetFTPData.Size = new System.Drawing.Size(75, 23);
+            this.btnGetFTPData.TabIndex = 1;
+            this.btnGetFTPData.Text = "获取FTP数据";
+            this.btnGetFTPData.UseVisualStyleBackColor = true;
+            this.btnGetFTPData.Click += new System.EventHandler(this.btnGetFTPData_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnGetFTPData);
             this.Controls.Add(this.btn_TestDataSource);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -56,6 +68,7 @@
         #endregion
 
         private System.Windows.Forms.Button btn_TestDataSource;
+        private System.Windows.Forms.Button btnGetFTPData;
     }
 }
 

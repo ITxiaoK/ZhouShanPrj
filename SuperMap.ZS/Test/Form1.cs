@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMap.ZS.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,16 @@ namespace Test
         {
             DataSet dt = DbHelperMySQL.GetDataSet(DbHelperMySQL.Conn, CommandType.Text, "select * from test", null);
             MessageBox.Show(dt.Tables[0].Rows.Count.ToString());
+        }
+
+        private void btnGetFTPData_Click(object sender, EventArgs e)
+        {
+            FTPHelper ftp = new FTPHelper("192.168.245.129", "admin", "admin");
+            ftp.GotoDirectory("数据库部署包", false);
+            foreach (string name in ftp.GetDirectoryList())
+            {
+                MessageBox.Show(name);
+            }
         }
     }
 }
