@@ -47,5 +47,41 @@ namespace SuperMap.ZS.Data.Properties {
                 this["WorkspaceInfo"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("admin")]
+        public string FTP_User {
+            get {
+                return ((string)(this["FTP_User"]));
+            }
+            set {
+                this["FTP_User"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("admin")]
+        public string FTP_Password {
+            get {
+                return ((string)(this["FTP_Password"]));
+            }
+            set {
+                this["FTP_Password"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.245.129")]
+        public string FTP_IP {
+            get {
+                return ((string)(this["FTP_IP"]));
+            }
+            set {
+                this["FTP_IP"] = value;
+            }
+        }
     }
 }

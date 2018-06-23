@@ -7,13 +7,15 @@ using System.Text;
 
 namespace SuperMap.ZS.Data
 {
-    public class FTPHelper
+    internal class FTPHelper
     {
         string ftpRemotePath;
         string ftpUserID;
         string ftpPassword;
         string ftpURI;
         string ftpServerIP;
+
+        public string CurrentDirPath => ftpURI;
 
         /// <summary>
         /// 连接FTP
@@ -232,6 +234,10 @@ namespace SuperMap.ZS.Data
                     result.Append(line);
                     result.Append("\n");
                     line = reader.ReadLine();
+                }
+                if (result.Length <= 0)
+                {
+                    return new string[0];
                 }
                 result.Remove(result.ToString().LastIndexOf("\n"), 1);
                 reader.Close();
@@ -470,13 +476,13 @@ namespace SuperMap.ZS.Data
         {
             if (IsRoot)
             {
-                ftpRemotePath = DirectoryName;
+                ftpRemotePath = DirectoryName + "/";
             }
             else
             {
-                ftpRemotePath += DirectoryName + "/";
+                //ftpRemotePath += DirectoryName + "/";
             }
-            ftpURI = "ftp://" + ftpServerIP + "/" + ftpRemotePath + "/";
+            ftpURI = /*"ftp://" + ftpServerIP + "/" + */ftpRemotePath;
         }
     }
 }

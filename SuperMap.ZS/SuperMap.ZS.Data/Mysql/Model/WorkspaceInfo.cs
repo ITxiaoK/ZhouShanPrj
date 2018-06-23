@@ -78,7 +78,7 @@ namespace SuperMap.ZS.Data
         /// <returns></returns>
         public override BaseModel GetData(int modelID)
         {
-            WorkspaceInfo infoResult = new WorkspaceInfo();
+            WorkspaceInfo infoResult = null;
 
             try
             {
@@ -88,6 +88,47 @@ namespace SuperMap.ZS.Data
 
                 if (dt.Tables.Count > 0 && dt.Tables[0].Rows.Count > 0)
                 {
+                    infoResult = new WorkspaceInfo();
+                    infoResult.ID = Convert.ToInt32(dt.Tables[0].Rows[0]["id"]);
+                    infoResult.WorkspaceName = Convert.ToString(dt.Tables[0].Rows[0]["WorkspaceName"]);
+                    infoResult.WorkspaceServerPath = Convert.ToString(dt.Tables[0].Rows[0]["WorkspaceServerPath"]);
+                    switch (Convert.ToInt32(dt.Tables[0].Rows[0]["IsUpdate"]))
+                    {
+                        case 0:
+                            infoResult.IsUpdate = false;
+                            break;
+                        case 1:
+                            infoResult.IsUpdate = true;
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
+
+            return infoResult;
+        }
+
+        /// <summary>
+        /// 获取某一个工作空间信息
+        /// </summary>
+        /// <param name="modelName">工作空间名称</param>
+        /// <returns></returns>
+        public BaseModel GetData(string modelName)
+        {
+            WorkspaceInfo infoResult = null;
+
+            try
+            {
+                string sql = "select * from {0} where WorkspaceName='{1}'";
+                sql = string.Format(sql, Properties.Settings.Default.WorkspaceInfo, modelName);
+                DataSet dt = DbHelperMySQL.GetDataSet(DbHelperMySQL.Conn, CommandType.Text, sql);
+
+                if (dt.Tables.Count > 0 && dt.Tables[0].Rows.Count > 0)
+                {
+                    infoResult = new WorkspaceInfo();
                     infoResult.ID = Convert.ToInt32(dt.Tables[0].Rows[0]["id"]);
                     infoResult.WorkspaceName = Convert.ToString(dt.Tables[0].Rows[0]["WorkspaceName"]);
                     infoResult.WorkspaceServerPath = Convert.ToString(dt.Tables[0].Rows[0]["WorkspaceServerPath"]);

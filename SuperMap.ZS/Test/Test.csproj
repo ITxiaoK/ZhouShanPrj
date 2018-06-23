@@ -98,6 +98,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SuperMap.ZS.Common\SuperMap.ZS.Common.csproj">
+      <Project>{2692FD42-446C-4A1D-8A63-395C78CDB9EF}</Project>
+      <Name>SuperMap.ZS.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SuperMap.ZS.Data\SuperMap.ZS.Data.csproj">
       <Project>{97c3aa1f-5a35-401c-8fc5-09f7e11f5b3c}</Project>
       <Name>SuperMap.ZS.Data</Name>

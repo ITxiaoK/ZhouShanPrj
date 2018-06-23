@@ -8,5 +8,14 @@
     <Setting Name="WorkspaceInfo" Type="System.String" Scope="User">
       <Value Profile="(Default)">workspaceinfo</Value>
     </Setting>
+    <Setting Name="FTP_User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="FTP_Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="FTP_IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.245.129</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

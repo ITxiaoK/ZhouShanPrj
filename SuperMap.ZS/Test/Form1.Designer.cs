@@ -37,6 +37,9 @@
             this.lblResult = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnNewWorkspaceInfo = new System.Windows.Forms.Button();
             this.btnDeleteWorkspaceInfo = new System.Windows.Forms.Button();
+            this.btnCommitWorkspace = new System.Windows.Forms.Button();
+            this.btnDeleteWorkspace = new System.Windows.Forms.Button();
+            this.btnDownWorkspace = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,11 +129,44 @@
             this.btnDeleteWorkspaceInfo.UseVisualStyleBackColor = true;
             this.btnDeleteWorkspaceInfo.Click += new System.EventHandler(this.btnDeleteWorkspaceInfo_Click);
             // 
+            // btnCommitWorkspace
+            // 
+            this.btnCommitWorkspace.Location = new System.Drawing.Point(12, 215);
+            this.btnCommitWorkspace.Name = "btnCommitWorkspace";
+            this.btnCommitWorkspace.Size = new System.Drawing.Size(156, 23);
+            this.btnCommitWorkspace.TabIndex = 8;
+            this.btnCommitWorkspace.Text = "提交工程";
+            this.btnCommitWorkspace.UseVisualStyleBackColor = true;
+            this.btnCommitWorkspace.Click += new System.EventHandler(this.btnCommitWorkspace_Click);
+            // 
+            // btnDeleteWorkspace
+            // 
+            this.btnDeleteWorkspace.Location = new System.Drawing.Point(12, 244);
+            this.btnDeleteWorkspace.Name = "btnDeleteWorkspace";
+            this.btnDeleteWorkspace.Size = new System.Drawing.Size(156, 23);
+            this.btnDeleteWorkspace.TabIndex = 9;
+            this.btnDeleteWorkspace.Text = "删除工程";
+            this.btnDeleteWorkspace.UseVisualStyleBackColor = true;
+            this.btnDeleteWorkspace.Click += new System.EventHandler(this.btnDeleteWorkspace_Click);
+            // 
+            // btnDownWorkspace
+            // 
+            this.btnDownWorkspace.Location = new System.Drawing.Point(12, 273);
+            this.btnDownWorkspace.Name = "btnDownWorkspace";
+            this.btnDownWorkspace.Size = new System.Drawing.Size(156, 23);
+            this.btnDownWorkspace.TabIndex = 10;
+            this.btnDownWorkspace.Text = "下载工程";
+            this.btnDownWorkspace.UseVisualStyleBackColor = true;
+            this.btnDownWorkspace.Click += new System.EventHandler(this.btnDownWorkspace_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnDownWorkspace);
+            this.Controls.Add(this.btnDeleteWorkspace);
+            this.Controls.Add(this.btnCommitWorkspace);
             this.Controls.Add(this.btnDeleteWorkspaceInfo);
             this.Controls.Add(this.btnNewWorkspaceInfo);
             this.Controls.Add(this.statusStrip1);
@@ -141,6 +177,7 @@
             this.Controls.Add(this.btn_TestDataSource);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -159,6 +196,9 @@
         private System.Windows.Forms.ToolStripStatusLabel lblResult;
         private System.Windows.Forms.Button btnNewWorkspaceInfo;
         private System.Windows.Forms.Button btnDeleteWorkspaceInfo;
+        private System.Windows.Forms.Button btnCommitWorkspace;
+        private System.Windows.Forms.Button btnDeleteWorkspace;
+        private System.Windows.Forms.Button btnDownWorkspace;
     }
 }
 

@@ -62,9 +62,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FTP\FPTHelper2.cs" />
+    <Compile Include="FTP\FTPController.cs" />
     <Compile Include="Mysql\BaseModel.cs" />
     <Compile Include="Mysql\DbHelperMySQL.cs" />
-    <Compile Include="FTPHelper.cs" />
+    <Compile Include="FTP\FTPHelper.cs" />
     <Compile Include="Mysql\Model\WorkspaceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

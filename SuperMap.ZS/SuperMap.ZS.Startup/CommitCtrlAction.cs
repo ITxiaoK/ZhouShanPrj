@@ -9,28 +9,27 @@ using System.Windows.Forms;
 
 namespace SuperMap.ZS.Startup
 {
-    class TestDataSourceCtrlAction : CtrlAction
+    class CommitCtrlAction : CtrlAction
     {
 #pragma warning disable CS0612 // 类型或成员已过时
-        public TestDataSourceCtrlAction()
+        public CommitCtrlAction()
         {
         }
 #pragma warning restore CS0612 // 类型或成员已过时
 
-        public TestDataSourceCtrlAction(IBaseItem caller) : base(caller)
+        public CommitCtrlAction(IBaseItem caller) : base(caller)
         {
         }
 
 #pragma warning disable CS0612 // 类型或成员已过时
-        public TestDataSourceCtrlAction(IBaseItem caller, IForm formClass) : base(caller: caller, formClass: formClass)
+        public CommitCtrlAction(IBaseItem caller, IForm formClass) : base(caller: caller, formClass: formClass)
 #pragma warning restore CS0612 // 类型或成员已过时
         {
         }
 
         public override void Run()
         {
-            DataSet dt = DbHelperMySQL.GetDataSet(DbHelperMySQL.Conn, CommandType.Text, "select * from test", null);
-            MessageBox.Show(dt.Tables[0].Rows.Count.ToString());
+            FTPController.Commit("");
         }
     }
 }

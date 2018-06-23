@@ -1,4 +1,5 @@
-﻿using SuperMap.ZS.Data;
+﻿using SuperMap.ZS.Common;
+using SuperMap.ZS.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,23 @@ namespace Test
             InitializeComponent();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                string sql = "select WorkspaceServerPath from workspaceserverinfo";
+                DataSet dt = DbHelperMySQL.GetDataSet(DbHelperMySQL.Conn, CommandType.Text, sql);
+                if (dt.Tables.Count > 0 && dt.Tables[0].Rows.Count > 0)
+                {
+                    CommonPars.DataRootDirInServer = dt.Tables[0].Rows[0][0].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
+        }
+
         private void btn_TestDataSource_Click(object sender, EventArgs e)
         {
             DataSet dt = DbHelperMySQL.GetDataSet(DbHelperMySQL.Conn, CommandType.Text, "select * from test", null);
@@ -25,12 +43,12 @@ namespace Test
 
         private void btnGetFTPData_Click(object sender, EventArgs e)
         {
-            FTPHelper ftp = new FTPHelper("192.168.245.129", "admin", "admin");
-            ftp.GotoDirectory("数据库部署包", false);
-            foreach (string name in ftp.GetDirectoryList())
-            {
-                lblResult.Text += name + ",";
-            }
+            //FTPHelper ftp = new FTPHelper("192.168.245.129", "admin", "admin");
+            //ftp.GotoDirectory("数据库部署包", false);
+            //foreach (string name in ftp.GetDirectoryList())
+            //{
+            //    lblResult.Text += name + ",";
+            //}
         }
 
         private void btnWorkspaceInfo_Click(object sender, EventArgs e)
@@ -75,6 +93,38 @@ namespace Test
         {
             WorkspaceInfo workspace = new WorkspaceInfo();
             lblResult.Text = workspace.DeleteData(1).ToString();
+        }
+
+        private void btnCommitWorkspace_Click(object sender, EventArgs e)
+        {
+            string path = @"E:\数字工厂数据\workspace.smwu";
+            if (!FTPController.Exist(path))
+            {
+                lblResult.Text = FTPController.Commit(path).ToString();
+            }
+            else
+            {
+                FTPController.Delete(path);
+                lblResult.Text = FTPController.Commit(path).ToString();
+            }
+        }
+
+        private void btnDeleteWorkspace_Click(object sender, EventArgs e)
+        {
+            string path = @"E:\数字工厂数据\workspace.smwu";
+            if (FTPController.Exist(path))
+            {
+                lblResult.Text = FTPController.Delete(path).ToString();
+            }
+        }
+
+        private void btnDownWorkspace_Click(object sender, EventArgs e)
+        {
+            string path = @"E:\数字工厂数据\workspace.smwu";
+            if (FTPController.Exist(path))
+            {
+                FTPController.Update(path);
+            }
         }
     }
 }
