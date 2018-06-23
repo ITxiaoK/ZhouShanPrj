@@ -20,7 +20,7 @@ namespace Test
         private void btn_TestDataSource_Click(object sender, EventArgs e)
         {
             DataSet dt = DbHelperMySQL.GetDataSet(DbHelperMySQL.Conn, CommandType.Text, "select * from test", null);
-            MessageBox.Show(dt.Tables[0].Rows.Count.ToString());
+            lblResult.Text = dt.Tables[0].Rows.Count.ToString();
         }
 
         private void btnGetFTPData_Click(object sender, EventArgs e)
@@ -29,8 +29,52 @@ namespace Test
             ftp.GotoDirectory("数据库部署包", false);
             foreach (string name in ftp.GetDirectoryList())
             {
-                MessageBox.Show(name);
+                lblResult.Text += name + ",";
             }
+        }
+
+        private void btnWorkspaceInfo_Click(object sender, EventArgs e)
+        {
+            WorkspaceInfo workspace = new WorkspaceInfo();
+
+            foreach (WorkspaceInfo info in workspace.GetAllData())
+            {
+                lblResult.Text += info.WorkspaceName + ",";
+            }
+        }
+
+        private void btnGetWorksoaceInfo_Click(object sender, EventArgs e)
+        {
+            WorkspaceInfo workspace = new WorkspaceInfo();
+            lblResult.Text = (workspace.GetData(-1) as WorkspaceInfo).WorkspaceName;
+        }
+
+        private void btnUpdateWorkspaceInfo_Click(object sender, EventArgs e)
+        {
+            WorkspaceInfo workspace = new WorkspaceInfo
+            {
+                WorkspaceName = "",
+                WorkspaceServerPath = "数据舟山数据",
+                IsUpdate = true
+            };
+            lblResult.Text = workspace.Update(workspace).ToString();
+        }
+
+        private void btnNewWorkspaceInfo_Click(object sender, EventArgs e)
+        {
+            WorkspaceInfo workspace = new WorkspaceInfo
+            {
+                WorkspaceName = "黄土店",
+                WorkspaceServerPath = "数据\\黄土店数据",
+                IsUpdate = true
+            };
+            lblResult.Text = workspace.AddData(workspace).ToString();
+        }
+
+        private void btnDeleteWorkspaceInfo_Click(object sender, EventArgs e)
+        {
+            WorkspaceInfo workspace = new WorkspaceInfo();
+            lblResult.Text = workspace.DeleteData(1).ToString();
         }
     }
 }

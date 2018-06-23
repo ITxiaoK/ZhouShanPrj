@@ -9,9 +9,14 @@ using System.Text;
 
 namespace SuperMap.ZS.Data
 {
+    /// <summary>
+    /// MySQL操作类。
+    /// </summary>
     public class DbHelperMySQL
     {
-        //数据库连接字符串
+        /// <summary>
+        /// 数据库连接字符串
+        /// </summary>
         public static string Conn = Properties.Settings.Default.Connection;
 
         // 用于缓存参数的HASH表
@@ -140,8 +145,10 @@ namespace SuperMap.ZS.Data
                 //调用 PrepareCommand 方法，对 MySqlCommand 对象设置参数
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
                 //调用 MySqlCommand  的 ExecuteReader 方法
-                MySqlDataAdapter adapter = new MySqlDataAdapter();
-                adapter.SelectCommand = cmd;
+                MySqlDataAdapter adapter = new MySqlDataAdapter
+                {
+                    SelectCommand = cmd
+                };
                 DataSet ds = new DataSet();
 
                 adapter.Fill(ds);

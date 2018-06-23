@@ -35,5 +35,17 @@ namespace SuperMap.ZS.Data.Properties {
                 this["Connection"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("workspaceinfo")]
+        public string WorkspaceInfo {
+            get {
+                return ((string)(this["WorkspaceInfo"]));
+            }
+            set {
+                this["WorkspaceInfo"] = value;
+            }
+        }
     }
 }

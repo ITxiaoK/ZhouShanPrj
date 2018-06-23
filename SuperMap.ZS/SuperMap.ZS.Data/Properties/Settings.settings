@@ -5,5 +5,8 @@
     <Setting Name="Connection" Type="System.String" Scope="User">
       <Value Profile="(Default)">Database='zsdatasource';Data Source='localhost';User Id='root';Password='admin';charset='utf8';pooling=true</Value>
     </Setting>
+    <Setting Name="WorkspaceInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">workspaceinfo</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

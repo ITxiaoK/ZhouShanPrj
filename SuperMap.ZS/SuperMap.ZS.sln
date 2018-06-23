@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMap.ZS.Data", "SuperMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{7AD51121-91AB-42F1-B745-2C700D47271A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMap.ZS.Common", "SuperMap.ZS.Common\SuperMap.ZS.Common.csproj", "{2692FD42-446C-4A1D-8A63-395C78CDB9EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{7AD51121-91AB-42F1-B745-2C700D47271A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7AD51121-91AB-42F1-B745-2C700D47271A}.Release|x64.ActiveCfg = Release|Any CPU
 		{7AD51121-91AB-42F1-B745-2C700D47271A}.Release|x64.Build.0 = Release|Any CPU
+		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Debug|x64.ActiveCfg = Debug|x64
+		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Debug|x64.Build.0 = Debug|x64
+		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Release|x64.ActiveCfg = Release|Any CPU
+		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
