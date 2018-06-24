@@ -12,28 +12,64 @@ namespace SuperMap.ZS.Data
     /// </summary>
     public class FTPController
     {
-        private static FTPHelper m_ftp;
-        private static string m_FTPPath = "";
-        private static string m_CurrentPath = "";
+        private FTPHelper m_ftp = new FTPHelper(new Uri("ftp://" + Properties.Settings.Default.FTP_IP), Properties.Settings.Default.FTP_User, Properties.Settings.Default.FTP_Password);
+        private string m_CurrentPath = "";
+
+        /// <summary>
+        /// 提交文件完成的委托。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public delegate void CommitCompletedHandler(object sender, System.Net.UploadFileCompletedEventArgs e);
+        /// <summary>
+        /// 提交文件完成事件。
+        /// </summary>
+        public event CommitCompletedHandler OnCommitCompleted;
+
+        /// <summary>
+        /// 提交文件过程的委托。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void CommitProgressHandler(object sender, System.Net.UploadProgressChangedEventArgs e);
+        /// <summary>
+        /// 提交文件过程事件。
+        /// </summary>
+        public event CommitProgressHandler OnCommitProcess;
+
+        /// <summary>
+        /// 更新文件结束的委托。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void UpdateCompleteHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+        /// <summary>
+        /// 更新文件结束事件。
+        /// </summary>
+        public event UpdateCompleteHandler OnUpdateComplete;
+
+        /// <summary>
+        /// 更新文件过程的委托。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void UpdateProcessHandler(object sender, System.Net.DownloadProgressChangedEventArgs e);
+        /// <summary>
+        /// 更新文件过程的事件。
+        /// </summary>
+        public event UpdateProcessHandler OnUpdateProcess;
 
         /// <summary>
         /// 更新数据到本地
         /// </summary>
         /// <param name="workspacePath">本地工作空间路径</param>
-        public static bool Update(string workspacePath)
+        public void Update(string workspacePath)
         {
-            bool bResult = false;
-
             try
             {
-                if (m_ftp == null)
-                {
-                    m_ftp = new FTPHelper(Properties.Settings.Default.FTP_IP, Properties.Settings.Default.FTP_User, Properties.Settings.Default.FTP_Password);
-                    m_FTPPath = m_ftp.CurrentDirPath;
-                }
-
                 string[] pars = workspacePath.Split('\\');
-                string dirName = pars[pars.Length - 1].Split('.')[0];
+                string workspaceName = pars[pars.Length - 1].Split('.')[0];
 
                 string destDir = workspacePath.Substring(0, workspacePath.LastIndexOf("\\"));
                 Directory.Delete(destDir, true);
@@ -41,31 +77,47 @@ namespace SuperMap.ZS.Data
 
                 //从数据库中获取工程名称的工作空间信息
                 WorkspaceInfo existInfo = new WorkspaceInfo();
-                existInfo = existInfo.GetData(dirName) as WorkspaceInfo;
+                existInfo = existInfo.GetData(workspaceName) as WorkspaceInfo;
 
-                if (existInfo != null)
+                if (existInfo != null && existInfo.IsUpdate)
                 {
-                    //切换到FTP数据根目录
-                    m_ftp.GotoDirectory(m_FTPPath + existInfo.WorkspaceServerPath, true);
-                    //检查该工程文件夹是否存在
-                    if (m_ftp.DirectoryExist(dirName))
+                    ComeoutDir(m_ftp.DirectoryPath);
+                    if (m_ftp.GotoDirectory(existInfo.WorkspaceServerPath))
                     {
-                        bResult = false;
-                    }
-                    else
-                    {
-                        //获取这个文件夹下的所有文件列表
-                        string[] files = m_ftp.GetFilesDetailList();
-                        foreach (string file in files)
+                        m_CurrentPath = m_ftp.DirectoryPath;
+                        FileStruct[] files = m_ftp.ListFiles();
+                        m_ftp.DownloadProgressChanged -= M_ftp2_DownloadProgressChanged;
+                        m_ftp.DownloadDataCompleted -= M_ftp2_DownloadDataCompleted;
+                        m_ftp.DownloadProgressChanged += M_ftp2_DownloadProgressChanged;
+                        m_ftp.DownloadDataCompleted += M_ftp2_DownloadDataCompleted;
+                        foreach (FileStruct fs in files)
                         {
-                            string fileName = file.Split(' ')[file.Split(' ').Length - 1];
-                            string url = m_FTPPath + existInfo.WorkspaceServerPath + "/" + fileName;
-                            m_ftp.Download(destDir, url, fileName);
+                            m_ftp.DownloadFileAsync(fs.Name, destDir + "\\" + fs.Name);
                         }
-
                         //修改数据库中工作空间信息数据表
                         existInfo.IsUpdate = false;
-                        bResult = existInfo.Update(existInfo);
+                        existInfo.Update(existInfo);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+                Log.ShowError(m_ftp.ErrorMsg);
+            }
+        }
+
+        private void ComeoutDir(string dir)
+        {
+            try
+            {
+                if(!m_ftp.DirectoryPath.Equals("/"))
+                {
+                    if (m_ftp.ComeoutDirectory())
+                    {
+                        m_CurrentPath = m_ftp.DirectoryPath;
+                        ComeoutDir(m_ftp.DirectoryPath);
                     }
                 }
             }
@@ -73,74 +125,136 @@ namespace SuperMap.ZS.Data
             {
                 Log.OutputBox(ex);
             }
+        }
 
-            return bResult;
+        private void M_ftp2_DownloadDataCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            try
+            {
+                OnUpdateComplete?.Invoke(sender, e);
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+                Log.ShowError(m_ftp.ErrorMsg);
+            }
+        }
+
+        private void M_ftp2_DownloadProgressChanged(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        {
+            try
+            {
+                OnUpdateProcess?.Invoke(sender, e);
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+                Log.ShowError(m_ftp.ErrorMsg);
+            }
         }
 
         /// <summary>
         /// 提交数据到服务器
         /// </summary>
         /// <param name="workspacePath">本地工作空间路径</param>
-        public static bool Commit(string workspacePath)
+        public void Commit(string workspacePath)
         {
-            bool bResult = false;
-
             try
             {
-                if (m_ftp == null)
-                {
-                    m_ftp = new FTPHelper(Properties.Settings.Default.FTP_IP, Properties.Settings.Default.FTP_User, Properties.Settings.Default.FTP_Password);
-                    m_FTPPath = m_ftp.CurrentDirPath;
-                }
-
                 string[] pars = workspacePath.Split('\\');
-                string dirName = pars[pars.Length - 1].Split('.')[0];
+                string workspaceName = pars[pars.Length - 1].Split('.')[0];
 
-                //从数据库中获取工程名称的工作空间信息
-                WorkspaceInfo existInfo = new WorkspaceInfo();
-                existInfo = existInfo.GetData(dirName) as WorkspaceInfo;
-
-                if (existInfo == null)
+                if (!m_ftp.DirectoryPath.Equals("/" + CommonPars.DataRootDirInServer + "/"))
                 {
-                    //1、切换到FTP数据根目录
-                    m_CurrentPath = m_FTPPath + CommonPars.DataRootDirInServer;
-                    m_ftp.GotoDirectory(m_CurrentPath, true);
-                    //2、检查该工程文件夹是否存在
-                    if (m_ftp.DirectoryExist(dirName))
+                    if (m_ftp.GotoDirectory(CommonPars.DataRootDirInServer))
                     {
-                        bResult = false;
-                    }
-                    else
-                    {
-                        //3、创建新的文件夹
-                        m_ftp.MakeDir(dirName);
-                        //4、切换到创建的目录下
-                        m_CurrentPath = m_FTPPath + CommonPars.DataRootDirInServer + "/" + dirName;
-                        m_ftp.GotoDirectory(m_CurrentPath, true);
-                        //5、上传文件到新建的文件夹中
-                        string localDirPath = workspacePath.Substring(0, workspacePath.LastIndexOf("\\"));
-                        foreach (string filename in Directory.GetFiles(localDirPath))
+                        m_CurrentPath = m_ftp.DirectoryPath;
+                        if (m_ftp.DirectoryExist(workspaceName))
                         {
-                            m_ftp.Upload(filename);
+                            Delete(workspacePath);
                         }
-                        //6、修改数据库中工作空间信息数据表
-                        WorkspaceInfo info = new WorkspaceInfo()
+                        if (m_ftp.MakeDirectory(workspaceName))
                         {
-                            IsUpdate = true,
-                            WorkspaceName = dirName,
-                            WorkspaceServerPath = CommonPars.DataRootDirInServer + "/" + dirName
-                        };
+                            if (m_ftp.GotoDirectory(workspaceName))
+                            {
+                                m_CurrentPath = m_ftp.DirectoryPath;
+                                string localDirPath = workspacePath.Substring(0, workspacePath.LastIndexOf("\\"));
+                                m_ftp.UploadFileCompleted -= M_ftp2_UploadFileCompleted;
+                                m_ftp.UploadProgressChanged -= M_ftp2_UploadProgressChanged;
+                                m_ftp.UploadFileCompleted += M_ftp2_UploadFileCompleted;
+                                m_ftp.UploadProgressChanged += M_ftp2_UploadProgressChanged;
+                                foreach (string filename in Directory.GetFiles(localDirPath))
+                                {
+                                    m_ftp.UploadFileAsync(filename, true);
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (m_ftp.DirectoryExist(workspaceName))
+                    {
+                        Delete(workspacePath);
+                    }
+                    if (m_ftp.MakeDirectory(workspaceName))
+                    {
+                        if (m_ftp.GotoDirectory(workspaceName))
+                        {
+                            m_CurrentPath = m_ftp.DirectoryPath;
+                            string localDirPath = workspacePath.Substring(0, workspacePath.LastIndexOf("\\"));
+                            m_ftp.UploadFileCompleted -= M_ftp2_UploadFileCompleted;
+                            m_ftp.UploadProgressChanged -= M_ftp2_UploadProgressChanged;
+                            m_ftp.UploadFileCompleted += M_ftp2_UploadFileCompleted;
+                            m_ftp.UploadProgressChanged += M_ftp2_UploadProgressChanged;
+                            foreach (string filename in Directory.GetFiles(localDirPath))
+                            {
+                                m_ftp.UploadFileAsync(filename, true);
+                            }
+                            
+                            WorkspaceInfo info = new WorkspaceInfo()
+                            {
+                                IsUpdate = true,
+                                WorkspaceName = workspaceName,
+                                WorkspaceServerPath = CommonPars.DataRootDirInServer + "/" + workspaceName
+                            };
 
-                        bResult = info.AddData(info);
+                            info.AddData(info);
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
                 Log.OutputBox(ex);
+                Log.ShowError(m_ftp.ErrorMsg);
             }
+        }
 
-            return bResult;
+        private void M_ftp2_UploadProgressChanged(object sender, System.Net.UploadProgressChangedEventArgs e)
+        {
+            try
+            {
+                OnCommitProcess?.Invoke(sender, e);
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+                Log.ShowError(m_ftp.ErrorMsg);
+            }
+        }
+
+        private void M_ftp2_UploadFileCompleted(object sender, System.Net.UploadFileCompletedEventArgs e)
+        {
+            try
+            {
+                OnCommitCompleted?.Invoke(sender, e);
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+                Log.ShowError(m_ftp.ErrorMsg);
+            }
         }
 
         /// <summary>
@@ -148,33 +262,38 @@ namespace SuperMap.ZS.Data
         /// </summary>
         /// <param name="workspacePath">本地工作空间路径</param>
         /// <returns></returns>
-        public static bool Exist(string workspacePath)
+        public bool Exist(string workspacePath)
         {
             bool bResult = false;
 
             try
             {
-                if (m_ftp == null)
-                {
-                    m_ftp = new FTPHelper(Properties.Settings.Default.FTP_IP, Properties.Settings.Default.FTP_User, Properties.Settings.Default.FTP_Password);
-                    m_FTPPath = m_ftp.CurrentDirPath;
-                }
-
                 string[] pars = workspacePath.Split('\\');
-                string dirName = pars[pars.Length - 1].Split('.')[0];
-
-                //1、切换到FTP数据根目录
-                m_CurrentPath = m_FTPPath + CommonPars.DataRootDirInServer;
-                m_ftp.GotoDirectory(m_CurrentPath, true);
-                //2、检查该工程文件夹是否存在
-                if (m_ftp.DirectoryExist(dirName))
+                string workspaceName = pars[pars.Length - 1].Split('.')[0];
+                
+                if (!m_ftp.DirectoryPath.Equals(m_CurrentPath))
                 {
-                    bResult = true;
+                    if (m_ftp.GotoDirectory(CommonPars.DataRootDirInServer))
+                    {
+                        m_CurrentPath = m_ftp.DirectoryPath;
+                        if (m_ftp.DirectoryExist(workspaceName))
+                        {
+                            bResult = true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (m_ftp.DirectoryExist(workspaceName))
+                    {
+                        bResult = true;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Log.OutputBox(ex);
+                Log.ShowError(m_ftp.ErrorMsg);
             }
 
             return bResult;
@@ -185,52 +304,72 @@ namespace SuperMap.ZS.Data
         /// </summary>
         /// <param name="workspacePath">本地工作空间路径</param>
         /// <returns></returns>
-        public static bool Delete(string workspacePath)
+        public bool Delete(string workspacePath)
         {
             bool bResult = false;
 
             try
             {
-                if (m_ftp == null)
-                {
-                    m_ftp = new FTPHelper(Properties.Settings.Default.FTP_IP, Properties.Settings.Default.FTP_User, Properties.Settings.Default.FTP_Password);
-                    m_FTPPath = m_ftp.CurrentDirPath;
-                }
-
                 string[] pars = workspacePath.Split('\\');
-                string dirName = pars[pars.Length - 1].Split('.')[0];
-
-                //1、切换到FTP数据根目录
-                m_CurrentPath = m_FTPPath + CommonPars.DataRootDirInServer;
-                m_ftp.GotoDirectory(m_CurrentPath, true);
-                //2、检查该工程文件夹是否存在
-                if (m_ftp.DirectoryExist(dirName))
+                string workspaceName = pars[pars.Length - 1].Split('.')[0];
+                
+                if (!m_ftp.DirectoryPath.Equals(m_CurrentPath))
                 {
-                    //3、检查文件夹下是否有文件，若有，删除
-                    if (m_ftp.FileExist(dirName))
+                    if (m_ftp.GotoDirectory(m_CurrentPath))
                     {
-                        //4、切换到这个目录下
-                        m_CurrentPath = m_FTPPath + CommonPars.DataRootDirInServer + "/" + dirName;
-                        m_ftp.GotoDirectory(m_CurrentPath, true);
-                        //4、获取这个文件夹下的所有文件列表
-                        string[] files = m_ftp.GetFilesDetailList();
-                        foreach(string file in files)
+                        m_CurrentPath = m_ftp.DirectoryPath;
+                        if (m_ftp.DirectoryExist(workspaceName))
                         {
-                            string name = m_CurrentPath + "/" + file.Split(' ')[file.Split(' ').Length - 1];
-                            m_ftp.Delete(name);
+                            if (m_ftp.GotoDirectory(workspaceName))
+                            {
+                                m_CurrentPath = m_ftp.DirectoryPath;
+                                FileStruct[] files = m_ftp.ListFiles();
+                                foreach (FileStruct fs in files)
+                                {
+                                    m_ftp.DeleteFile(fs.Name);
+                                }
+                                if (m_ftp.ComeoutDirectory())
+                                {
+                                    m_CurrentPath = m_ftp.DirectoryPath;
+                                    if (m_ftp.RemoveDirectory(workspaceName))
+                                    {
+                                        WorkspaceInfo info = new WorkspaceInfo();
+                                        bResult = info.DeleteData((info.GetData(workspaceName) as WorkspaceInfo).ID);
+                                    }
+                                }
+                            }
                         }
                     }
-                    m_CurrentPath = m_FTPPath + CommonPars.DataRootDirInServer;
-                    m_ftp.GotoDirectory(m_CurrentPath, true);
-                    m_ftp.RemoveDirectory(dirName);
-
-                    WorkspaceInfo info = new WorkspaceInfo();
-                    bResult = info.DeleteData((info.GetData(dirName) as WorkspaceInfo).ID);
+                }
+                else
+                {
+                    if (m_ftp.DirectoryExist(workspaceName))
+                    {
+                        if (m_ftp.GotoDirectory(workspaceName))
+                        {
+                            m_CurrentPath = m_ftp.DirectoryPath;
+                            FileStruct[] files = m_ftp.ListFiles();
+                            foreach (FileStruct fs in files)
+                            {
+                                m_ftp.DeleteFile(fs.Name);
+                            }
+                            if (m_ftp.ComeoutDirectory())
+                            {
+                                m_CurrentPath = m_ftp.DirectoryPath;
+                                if (m_ftp.RemoveDirectory(workspaceName))
+                                {
+                                    WorkspaceInfo info = new WorkspaceInfo();
+                                    bResult = info.DeleteData((info.GetData(workspaceName) as WorkspaceInfo).ID);
+                                }
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Log.OutputBox(ex);
+                Log.ShowError(m_ftp.ErrorMsg);
             }
 
             return bResult;

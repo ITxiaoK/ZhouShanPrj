@@ -98,33 +98,60 @@ namespace Test
         private void btnCommitWorkspace_Click(object sender, EventArgs e)
         {
             string path = @"E:\数字工厂数据\workspace.smwu";
-            if (!FTPController.Exist(path))
+            FTPController ftp = new FTPController();
+            ftp.OnCommitCompleted += Ftp_OnCommitCompleted;
+            ftp.OnCommitProcess += Ftp_OnCommitProcess;
+            if (!ftp.Exist(path))
             {
-                lblResult.Text = FTPController.Commit(path).ToString();
+                ftp.Commit(path);
             }
             else
             {
-                FTPController.Delete(path);
-                lblResult.Text = FTPController.Commit(path).ToString();
+                ftp.Delete(path);
+                ftp.Commit(path);
             }
+        }
+
+        private void Ftp_OnCommitProcess(object sender, System.Net.UploadProgressChangedEventArgs e)
+        {
+            lblResult.Text = (e.BytesSent / e.TotalBytesToSend * 100) + "%";
+        }
+
+        private void Ftp_OnCommitCompleted(object sender, System.Net.UploadFileCompletedEventArgs e)
+        {
+            lblResult.Text = "上传完成";
         }
 
         private void btnDeleteWorkspace_Click(object sender, EventArgs e)
         {
             string path = @"E:\数字工厂数据\workspace.smwu";
-            if (FTPController.Exist(path))
+            FTPController ftp = new FTPController();
+            if (ftp.Exist(path))
             {
-                lblResult.Text = FTPController.Delete(path).ToString();
+                lblResult.Text = ftp.Delete(path).ToString();
             }
         }
 
         private void btnDownWorkspace_Click(object sender, EventArgs e)
         {
             string path = @"E:\数字工厂数据\workspace.smwu";
-            if (FTPController.Exist(path))
+            FTPController ftp = new FTPController();
+            ftp.OnUpdateProcess += Ftp_OnUpdateProcess;
+            ftp.OnUpdateComplete += Ftp_OnUpdateComplete;
+            if (ftp.Exist(path))
             {
-                FTPController.Update(path);
+                ftp.Update(path);
             }
+        }
+
+        private void Ftp_OnUpdateComplete(object sender, AsyncCompletedEventArgs e)
+        {
+            lblResult.Text = "下载完成";
+        }
+
+        private void Ftp_OnUpdateProcess(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        {
+            lblResult.Text = (e.ProgressPercentage * 100) + "%";
         }
     }
 }
