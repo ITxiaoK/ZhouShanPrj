@@ -31,11 +31,12 @@ namespace SuperMap.ZS.Startup
         {
             try
             {
-                string sql = "select WorkspaceServerPath from workspaceserverinfo";
+                string sql = "select * from workspaceserverinfo";
                 DataSet dt = DbHelperMySQL.GetDataSet(DbHelperMySQL.Conn, CommandType.Text, sql);
                 if(dt.Tables.Count >0&& dt.Tables[0].Rows.Count > 0)
                 {
-                    CommonPars.DataRootDirInServer = dt.Tables[0].Rows[0][0].ToString();
+                    CommonPars.DataRootDirInServer = dt.Tables[0].Rows[0]["WorkspaceServerPath"].ToString();
+                    CommonPars.OriginalDirInServer = dt.Tables[0].Rows[0]["OriginalDir"].ToString();
                 }
             }
             catch (Exception ex)

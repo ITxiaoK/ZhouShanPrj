@@ -1,4 +1,5 @@
 ﻿using SuperMap.Desktop;
+using SuperMap.ZS.Common;
 using SuperMap.ZS.Data;
 using System;
 using System.Collections.Generic;
@@ -9,27 +10,34 @@ using System.Windows.Forms;
 
 namespace SuperMap.ZS.Startup
 {
-    class CommitCtrlAction : CtrlAction
+    public class CommitWorkspaceCtrlAction : CtrlAction
     {
 #pragma warning disable CS0612 // 类型或成员已过时
-        public CommitCtrlAction()
+        public CommitWorkspaceCtrlAction()
         {
         }
 #pragma warning restore CS0612 // 类型或成员已过时
 
-        public CommitCtrlAction(IBaseItem caller) : base(caller)
+        public CommitWorkspaceCtrlAction(IBaseItem caller) : base(caller)
         {
         }
 
 #pragma warning disable CS0612 // 类型或成员已过时
-        public CommitCtrlAction(IBaseItem caller, IForm formClass) : base(caller: caller, formClass: formClass)
+        public CommitWorkspaceCtrlAction(IBaseItem caller, IForm formClass) : base(caller: caller, formClass: formClass)
 #pragma warning restore CS0612 // 类型或成员已过时
         {
         }
 
         public override void Run()
         {
-            FTPController.Commit("");
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
         }
     }
 }

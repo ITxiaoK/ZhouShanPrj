@@ -77,9 +77,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataManager\NewWorkspaceCtrlAction.cs" />
     <Compile Include="DesktopPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CommitCtrlAction.cs" />
+    <Compile Include="DataManager\CommitWorkspaceCtrlAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\WorkEnvironment\Default\SuperMap.ZS.Startup.config">

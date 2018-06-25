@@ -16,6 +16,16 @@ namespace SuperMap.ZS.Data
         private string m_CurrentPath = "";
 
         /// <summary>
+        /// 更新文件总数
+        /// </summary>
+        public int UpdateFilesCount { get; private set; } = 0;
+
+        /// <summary>
+        /// 提交文件总数
+        /// </summary>
+        public int CommitFilesCount { get; private set; } = 0;
+
+        /// <summary>
         /// 提交文件完成的委托。
         /// </summary>
         /// <param name="sender"></param>
@@ -86,6 +96,7 @@ namespace SuperMap.ZS.Data
                     {
                         m_CurrentPath = m_ftp.DirectoryPath;
                         FileStruct[] files = m_ftp.ListFiles();
+                        UpdateFilesCount = files.Length;
                         m_ftp.DownloadProgressChanged -= M_ftp2_DownloadProgressChanged;
                         m_ftp.DownloadDataCompleted -= M_ftp2_DownloadDataCompleted;
                         m_ftp.DownloadProgressChanged += M_ftp2_DownloadProgressChanged;
@@ -99,6 +110,47 @@ namespace SuperMap.ZS.Data
                         existInfo.Update(existInfo);
                     }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+                Log.ShowError(m_ftp.ErrorMsg);
+            }
+        }
+
+        /// <summary>
+        /// 下载原始数据
+        /// </summary>
+        /// <param name="dirPath">要保存的本地目录</param>
+        public void UpdateOriginalData(string dirPath)
+        {
+            try
+            {
+                ComeoutDir(m_ftp.DirectoryPath);
+                if(m_ftp.DirectoryExist(CommonPars.DataRootDirInServer))
+                {
+                    if (m_ftp.GotoDirectory(CommonPars.DataRootDirInServer))
+                    {
+                        m_CurrentPath = m_ftp.DirectoryPath;
+                        if (m_ftp.DirectoryExist(CommonPars.OriginalDirInServer))
+                        {
+                            if (m_ftp.GotoDirectory(CommonPars.OriginalDirInServer))
+                            {
+                                m_CurrentPath = m_ftp.DirectoryPath;
+                                FileStruct[] files = m_ftp.ListFiles();
+                                UpdateFilesCount = files.Length;
+                                m_ftp.DownloadProgressChanged -= M_ftp2_DownloadProgressChanged;
+                                m_ftp.DownloadDataCompleted -= M_ftp2_DownloadDataCompleted;
+                                m_ftp.DownloadProgressChanged += M_ftp2_DownloadProgressChanged;
+                                m_ftp.DownloadDataCompleted += M_ftp2_DownloadDataCompleted;
+                                foreach (FileStruct fs in files)
+                                {
+                                    m_ftp.DownloadFileAsync(fs.Name, dirPath + "\\" + fs.Name);
+                                }
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -183,7 +235,9 @@ namespace SuperMap.ZS.Data
                                 m_ftp.UploadProgressChanged -= M_ftp2_UploadProgressChanged;
                                 m_ftp.UploadFileCompleted += M_ftp2_UploadFileCompleted;
                                 m_ftp.UploadProgressChanged += M_ftp2_UploadProgressChanged;
-                                foreach (string filename in Directory.GetFiles(localDirPath))
+                                string[] files = Directory.GetFiles(localDirPath);
+                                CommitFilesCount = files.Length;
+                                foreach (string filename in files)
                                 {
                                     m_ftp.UploadFileAsync(filename, true);
                                 }
