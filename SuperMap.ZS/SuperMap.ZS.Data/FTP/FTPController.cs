@@ -251,7 +251,7 @@ namespace SuperMap.ZS.Data
                     {
                         Delete(workspacePath);
                     }
-                    if (m_ftp.MakeDirectory(workspaceName))
+                    if (m_ftp.MakeDirectory("/" + workspaceName))
                     {
                         if (m_ftp.GotoDirectory(workspaceName))
                         {
@@ -265,18 +265,18 @@ namespace SuperMap.ZS.Data
                             {
                                 m_ftp.UploadFileAsync(filename, true);
                             }
-                            
-                            WorkspaceInfo info = new WorkspaceInfo()
-                            {
-                                IsUpdate = true,
-                                WorkspaceName = workspaceName,
-                                WorkspaceServerPath = CommonPars.DataRootDirInServer + "/" + workspaceName
-                            };
-
-                            info.AddData(info);
                         }
                     }
                 }
+
+                WorkspaceInfo info = new WorkspaceInfo()
+                {
+                    IsUpdate = true,
+                    WorkspaceName = workspaceName,
+                    WorkspaceServerPath = CommonPars.DataRootDirInServer + "/" + workspaceName
+                };
+
+                info.AddData(info);
             }
             catch (Exception ex)
             {

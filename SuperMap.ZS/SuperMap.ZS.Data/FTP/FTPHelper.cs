@@ -1200,7 +1200,7 @@ namespace SuperMap.ZS.Data
                 {
                     throw new Exception("服务器上面已经存在同名的文件名或目录名！");
                 }
-                Response = Open(new Uri(this.Uri.ToString() + DirectoryName), WebRequestMethods.Ftp.MakeDirectory);
+                Response = Open(new Uri(this.Uri.ToString() + "/" + DirectoryName), WebRequestMethods.Ftp.MakeDirectory);
                 return true;
             }
             catch (Exception ep)
@@ -1370,7 +1370,7 @@ namespace SuperMap.ZS.Data
             }
             else
             {
-                _DirectoryPath = "/" + String.Join("/", strDir, 0, strDir.Length - 1);
+                _DirectoryPath = "/" + String.Join("/", strDir, 0, strDir.Length - 1) + "/";
             }
             return true;
 
