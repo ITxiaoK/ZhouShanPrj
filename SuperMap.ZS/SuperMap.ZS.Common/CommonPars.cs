@@ -25,5 +25,10 @@ namespace SuperMap.ZS.Common
         /// 当前工作空间目录
         /// </summary>
         public static string CurrentWorkspaceDir { get; set; }
+
+        /// <summary>
+        /// 工作空间是否已经打开
+        /// </summary>
+        public static bool WorkspaceOpen { get; set; } = false;
     }
 }

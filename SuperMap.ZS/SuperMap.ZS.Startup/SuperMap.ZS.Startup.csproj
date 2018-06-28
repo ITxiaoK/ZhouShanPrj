@@ -77,10 +77,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataManager\NewWorkspaceCtrlAction.cs" />
+    <Compile Include="CtrlAction\DataManager\NewWorkspaceCtrlAction.cs" />
+    <Compile Include="CtrlAction\Theme\AggregateCtrlAction.cs" />
+    <Compile Include="CtrlAction\Theme\DangerResourceThemeCtrlAction.cs" />
+    <Compile Include="CtrlAction\Theme\EmergencyResourceCtrlAction.cs" />
+    <Compile Include="CtrlAction\Theme\FactoryRegionCtrlAction.cs" />
+    <Compile Include="CtrlAction\Theme\SaveRouteCtrlAction.cs" />
+    <Compile Include="CtrlAction\Theme\VideoCameraCtrlAction.cs" />
     <Compile Include="DesktopPlugin.cs" />
+    <Compile Include="CtrlAction\ImportData\ImportModelCtrlAction.cs" />
+    <Compile Include="CtrlAction\ImportData\ImportTableCtrlAction.cs" />
+    <Compile Include="CtrlAction\ImportFlyRouteCtrlAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataManager\CommitWorkspaceCtrlAction.cs" />
+    <Compile Include="CtrlAction\DataManager\CommitWorkspaceCtrlAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\WorkEnvironment\Default\SuperMap.ZS.Startup.config">

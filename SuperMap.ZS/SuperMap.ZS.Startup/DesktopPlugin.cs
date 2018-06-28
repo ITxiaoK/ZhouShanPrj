@@ -18,8 +18,34 @@ namespace SuperMap.ZS.Startup
         public override bool Initialize()
         {
             Init();
+            Application.ActiveApplication.Workspace.Opened += Workspace_Opened;
+            Application.ActiveApplication.Workspace.Closed += Workspace_Closed;
 
             return true;
+        }
+
+        private void Workspace_Closed(object sender, SuperMap.Data.WorkspaceClosedEventArgs args)
+        {
+            try
+            {
+                CommonPars.WorkspaceOpen = false;
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
+        }
+
+        private void Workspace_Opened(object sender, SuperMap.Data.WorkspaceOpenedEventArgs e)
+        {
+            try
+            {
+                CommonPars.WorkspaceOpen = true;
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
         }
 
         public override bool ExitInstance()
