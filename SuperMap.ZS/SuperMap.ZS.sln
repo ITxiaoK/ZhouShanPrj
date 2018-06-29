@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMap.ZS.Common", "SuperMap.ZS.Common\SuperMap.ZS.Common.csproj", "{2692FD42-446C-4A1D-8A63-395C78CDB9EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMap.ZS.ScreenTip", "SuperMap.ZS.ScreenTip\SuperMap.ZS.ScreenTip.csproj", "{C25C6635-B3AC-45A7-897E-28A61D3CFECB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,14 @@ Global
 		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Release|x64.ActiveCfg = Release|Any CPU
 		{2692FD42-446C-4A1D-8A63-395C78CDB9EF}.Release|x64.Build.0 = Release|Any CPU
+		{C25C6635-B3AC-45A7-897E-28A61D3CFECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C25C6635-B3AC-45A7-897E-28A61D3CFECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C25C6635-B3AC-45A7-897E-28A61D3CFECB}.Debug|x64.ActiveCfg = Debug|x64
+		{C25C6635-B3AC-45A7-897E-28A61D3CFECB}.Debug|x64.Build.0 = Debug|x64
+		{C25C6635-B3AC-45A7-897E-28A61D3CFECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C25C6635-B3AC-45A7-897E-28A61D3CFECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C25C6635-B3AC-45A7-897E-28A61D3CFECB}.Release|x64.ActiveCfg = Release|Any CPU
+		{C25C6635-B3AC-45A7-897E-28A61D3CFECB}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
