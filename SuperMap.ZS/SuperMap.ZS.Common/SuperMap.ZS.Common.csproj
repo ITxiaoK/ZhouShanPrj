@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="CommonPars.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="MessageServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

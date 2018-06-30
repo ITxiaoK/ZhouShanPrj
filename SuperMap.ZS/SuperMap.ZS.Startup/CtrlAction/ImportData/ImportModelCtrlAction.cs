@@ -26,7 +26,7 @@ namespace SuperMap.ZS.Startup
 
         public override void Run()
         {
-            System.Diagnostics.Process.Start(AppDomain.CurrentDomain.BaseDirectory + "SuperMap.ZS.ScreenTip.exe");
+
         }
     }
 }
