@@ -51,8 +51,7 @@ namespace SuperMap.ZS.Startup
                     string[] files = Directory.GetFiles(folder.SelectedPath);
                     if (files.Length > 0)
                     {
-                        UIMessageBox box = new UIMessageBox(MessageBoxUIStyle.iDesktopStyle);
-                        if (box.Show("该文件夹不为空，是否覆盖？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK)
+                        if (Desktop.Application.ActiveApplication.MessageBox.Show("该文件夹不为空，是否覆盖？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                         {
                             if (!string.IsNullOrEmpty(Desktop.Application.ActiveApplication.Workspace.ConnectionInfo.Server))
                             {

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SuperMap.ZS.ScreenTip"
         mc:Ignorable="d"
-        Title="MainWindow"  ResizeMode="NoResize" ShowInTaskbar="False" Opacity="1" AllowsTransparency="True" WindowStyle="None" Loaded="mainWindow_Loaded" WindowStartupLocation="CenterScreen" Margin="20,11" Background="{x:Null}">
+        Title="MainWindow"  ResizeMode="NoResize" ShowInTaskbar="False" Opacity="1" AllowsTransparency="True" WindowStyle="None" Loaded="mainWindow_Loaded" WindowStartupLocation="CenterScreen" Margin="20,11" Background="{x:Null}" BorderThickness="0">
     <Window.Resources>
         <Storyboard x:Key="OnImgRgithMouseEnter">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="img_right">
@@ -61,21 +61,25 @@
         </EventTrigger>
     </Window.Triggers>
     <Grid>
-        <Image x:Name="img_Exit" Source="Images/exit.png" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="64" Height="64" Panel.ZIndex="2" Margin="0,0,15,10" MouseLeftButtonDown="img_Exit_MouseLeftButtonDown"/>
-        <Image x:Name="img_left" Margin="0" HorizontalAlignment="Left" Width="70" Source="Images/arrow-left.png" Panel.ZIndex="1" Opacity="0" MouseLeftButtonDown="img_left_MouseLeftButtonDown"/>
-        <Image x:Name="img_right" Margin="0" HorizontalAlignment="Right" Width="70" Source="Images/arrow-right.png" Panel.ZIndex="1" Opacity="0" MouseLeftButtonDown="img_right_MouseLeftButtonDown"/>
-        <Grid x:Name="gd_Images">
-            
-        </Grid>
-        <Grid x:Name="gd_Points" Margin="0,0,0,20" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="20" Panel.ZIndex="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Ellipse Fill="Black" HorizontalAlignment="Left" Margin="0" Width="10" Height="10" Stroke="White"/>
-            <Ellipse Fill="Black" HorizontalAlignment="Left" Margin="10,5,0,5" Width="10" Height="10" Grid.Column="1" Stroke="White"/>
-            <Ellipse Fill="Black" HorizontalAlignment="Left" Margin="10,5,0,5" Width="10" Height="10" Grid.Column="2" Stroke="White"/>
-        </Grid>
+        <Border BorderThickness="3">
+            <Grid>
+                <Image x:Name="img_Exit" Source="Images/exit.png" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="64" Height="64" Panel.ZIndex="2" Margin="0,0,15,10" MouseLeftButtonDown="img_Exit_MouseLeftButtonDown"/>
+                <Image x:Name="img_left" Margin="0" HorizontalAlignment="Left" Width="70" Source="Images/arrow-left.png" Panel.ZIndex="1" Opacity="0" MouseLeftButtonDown="img_left_MouseLeftButtonDown"/>
+                <Image x:Name="img_right" Margin="0" HorizontalAlignment="Right" Width="70" Source="Images/arrow-right.png" Panel.ZIndex="1" Opacity="0" MouseLeftButtonDown="img_right_MouseLeftButtonDown"/>
+                <Grid x:Name="gd_Images">
+
+                </Grid>
+                <Grid x:Name="gd_Points" Margin="0,0,0,20" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="20" Panel.ZIndex="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Ellipse Fill="Black" HorizontalAlignment="Left" Margin="0" Width="10" Height="10" Stroke="White"/>
+                    <Ellipse Fill="Black" HorizontalAlignment="Left" Margin="10,5,0,5" Width="10" Height="10" Grid.Column="1" Stroke="White"/>
+                    <Ellipse Fill="Black" HorizontalAlignment="Left" Margin="10,5,0,5" Width="10" Height="10" Grid.Column="2" Stroke="White"/>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

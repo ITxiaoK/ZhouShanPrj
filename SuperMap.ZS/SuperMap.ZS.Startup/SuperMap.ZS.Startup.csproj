@@ -48,25 +48,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v17.1">
-      <HintPath>..\..\..\Bin\DevExpress.Data.v17.1.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.Utils.v17.1">
-      <HintPath>..\..\..\Bin\DevExpress.Utils.v17.1.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.Utils.v17.1.UI">
-      <HintPath>..\..\..\Bin\DevExpress.Utils.v17.1.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.XtraBars.v17.1">
-      <HintPath>..\..\..\Bin\DevExpress.XtraBars.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraEditors.v17.1">
-      <HintPath>..\..\..\Bin\DevExpress.XtraEditors.v17.1.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="MySql.Data, Version=6.9.12.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.9.12\lib\net40\MySql.Data.dll</HintPath>
     </Reference>
@@ -86,6 +67,10 @@
       <HintPath>..\..\..\Bin\SuperMap.Realspace.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="SuperMap.UI.Controls">
+      <HintPath>..\..\..\Bin\SuperMap.UI.Controls.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -98,12 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CtrlAction\DataManager\NewWorkspaceCtrlAction.cs" />
-    <Compile Include="CtrlAction\Theme\AggregateCtrlAction.cs" />
-    <Compile Include="CtrlAction\Theme\DangerResourceThemeCtrlAction.cs" />
-    <Compile Include="CtrlAction\Theme\EmergencyResourceCtrlAction.cs" />
-    <Compile Include="CtrlAction\Theme\FactoryRegionCtrlAction.cs" />
-    <Compile Include="CtrlAction\Theme\SaveRouteCtrlAction.cs" />
-    <Compile Include="CtrlAction\Theme\VideoCameraCtrlAction.cs" />
+    <Compile Include="CtrlAction\ThemeEditorCtrlAction.cs" />
     <Compile Include="DesktopPlugin.cs" />
     <Compile Include="CtrlAction\ImportData\ImportModelCtrlAction.cs" />
     <Compile Include="CtrlAction\ImportData\ImportTableCtrlAction.cs" />
