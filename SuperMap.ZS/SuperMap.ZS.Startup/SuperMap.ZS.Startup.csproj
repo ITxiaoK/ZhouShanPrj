@@ -88,6 +88,12 @@
     <Compile Include="CtrlAction\ImportData\ImportModelCtrlAction.cs" />
     <Compile Include="CtrlAction\ImportData\ImportTableCtrlAction.cs" />
     <Compile Include="CtrlAction\ImportFlyRouteCtrlAction.cs" />
+    <Compile Include="Controls\FlyRoute\FlyRouteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FlyRoute\FlyRouteControl.Designer.cs">
+      <DependentUpon>FlyRouteControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CtrlAction\DataManager\CommitWorkspaceCtrlAction.cs" />
     <Compile Include="Controls\Theme\ThemeControl.cs">
@@ -120,7 +126,11 @@
     <EmbeddedResource Include="Controls\Theme\ThemeControl.resx">
       <DependentUpon>ThemeControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FlyRoute\FlyRouteControl.resx">
+      <DependentUpon>FlyRouteControl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

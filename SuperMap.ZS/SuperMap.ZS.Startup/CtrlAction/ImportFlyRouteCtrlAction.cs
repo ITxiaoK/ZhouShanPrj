@@ -1,4 +1,5 @@
 ﻿using SuperMap.Desktop;
+using SuperMap.ZS.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,36 @@ namespace SuperMap.ZS.Startup
 
         public override void Run()
         {
-            Application.ActiveApplication.MessageBox.Show("未实现的功能");
+            try
+            {
+                if (!CommonPars.WorkspaceOpen)
+                {
+                    Application.ActiveApplication.MessageBox.Show("未打开工程！");
+                    return;
+                }
+                if (Application.ActiveApplication.MainForm.FormManager.Count == 0)
+                {
+                    Application.ActiveApplication.MessageBox.Show("未打开场景！");
+                    return;
+                }
+                else if (!(Application.ActiveApplication.MainForm.FormManager.ActiveForm is IFormScene))
+                {
+                    Application.ActiveApplication.MessageBox.Show("未打开场景！");
+                    return;
+                }
+                else
+                {
+                    IDockBar dockBar = Application.ActiveApplication.MainForm.DockBarManager[typeof(FlyRouteControl)];
+                    if (dockBar != null)
+                    {
+                        dockBar.Visible = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
         }
     }
 }

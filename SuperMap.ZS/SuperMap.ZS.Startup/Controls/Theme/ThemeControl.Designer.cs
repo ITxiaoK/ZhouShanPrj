@@ -33,8 +33,9 @@
             this.chkTheme = new System.Windows.Forms.CheckedListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dg_Data = new System.Windows.Forms.DataGridView();
             this.btn_Commit = new System.Windows.Forms.Button();
+            this.dg_Data = new System.Windows.Forms.DataGridView();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_Data)).BeginInit();
@@ -103,6 +104,7 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.btnRefresh);
             this.groupBox2.Controls.Add(this.btn_Commit);
             this.groupBox2.Controls.Add(this.dg_Data);
             this.groupBox2.Location = new System.Drawing.Point(17, 256);
@@ -111,20 +113,6 @@
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "属性数据";
-            // 
-            // dg_Data
-            // 
-            this.dg_Data.AllowUserToAddRows = false;
-            this.dg_Data.AllowUserToDeleteRows = false;
-            this.dg_Data.AllowUserToResizeColumns = false;
-            this.dg_Data.BackgroundColor = System.Drawing.Color.White;
-            this.dg_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dg_Data.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dg_Data.Location = new System.Drawing.Point(3, 17);
-            this.dg_Data.Name = "dg_Data";
-            this.dg_Data.RowTemplate.Height = 23;
-            this.dg_Data.Size = new System.Drawing.Size(203, 273);
-            this.dg_Data.TabIndex = 0;
             // 
             // btn_Commit
             // 
@@ -136,6 +124,32 @@
             this.btn_Commit.Text = "保  存";
             this.btn_Commit.UseVisualStyleBackColor = true;
             this.btn_Commit.Click += new System.EventHandler(this.btn_Commit_Click);
+            // 
+            // dg_Data
+            // 
+            this.dg_Data.AllowUserToAddRows = false;
+            this.dg_Data.AllowUserToResizeColumns = false;
+            this.dg_Data.BackgroundColor = System.Drawing.Color.White;
+            this.dg_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_Data.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dg_Data.Location = new System.Drawing.Point(3, 17);
+            this.dg_Data.Name = "dg_Data";
+            this.dg_Data.RowTemplate.Height = 23;
+            this.dg_Data.Size = new System.Drawing.Size(203, 273);
+            this.dg_Data.TabIndex = 0;
+            this.dg_Data.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dg_Data_RowHeaderMouseClick);
+            this.dg_Data.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dg_Data_UserDeletingRow);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.Location = new System.Drawing.Point(47, 296);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 2;
+            this.btnRefresh.Text = "刷  新";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // ThemeControl
             // 
@@ -163,5 +177,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dg_Data;
         private System.Windows.Forms.Button btn_Commit;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }

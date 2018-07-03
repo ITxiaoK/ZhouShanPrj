@@ -84,6 +84,7 @@ namespace SuperMap.ZS.Startup
                 chkTheme.DataSource = lstData;
                 chkTheme.DisplayMember = "Text";
                 chkTheme.ValueMember = "Tag";
+                chkTheme.SetItemChecked(0, true);
             }
             catch (Exception ex)
             {
@@ -130,52 +131,13 @@ namespace SuperMap.ZS.Startup
 
         private void chkTheme_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Recordset objRt = null;
             try
             {
-                dg_Data.Rows.Clear();
-                dg_Data.Columns.Clear();
-                if (chkTheme.SelectedItem == null)
-                {
-                    m_Application.MessageBox.Show("请选择要编辑的数据！");
-                    return;
-                }
-                Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;
-                objRt = (layer3DDataset.Dataset as DatasetVector).GetRecordset(false, CursorType.Static);
-                for (int i = 0; i < objRt.FieldCount; i++)
-                {
-                    FieldInfo fieldInfo = objRt.GetFieldInfos()[i];
-                    if (fieldInfo.Caption.ToLower().Contains("sm"))
-                    {
-                        continue;
-                    }
-                    dg_Data.Columns.Add(fieldInfo.Name, fieldInfo.Caption);
-                }
-
-                objRt.MoveFirst();
-                while (!objRt.IsEOF)
-                {
-                    DataGridViewRow row = new DataGridViewRow();
-                    row.HeaderCell.Value = objRt.GetID().ToString();
-                    for (int j = 0; j < dg_Data.ColumnCount; j++)
-                    {
-                        DataGridViewTextBoxCell textBoxCell = new DataGridViewTextBoxCell();
-                        textBoxCell.Value = Convert.ToString(objRt.GetFieldValue(dg_Data.Columns[j].Name));
-                        row.Cells.Add(textBoxCell);
-                    }
-                    dg_Data.Rows.Add(row);
-
-                    objRt.MoveNext();
-                }
+                GetData();
             }
             catch (Exception ex)
             {
                 Log.OutputBox(ex);
-            }
-            finally
-            {
-                objRt.Close();
-                objRt.Dispose();
             }
         }
 
@@ -207,8 +169,153 @@ namespace SuperMap.ZS.Startup
                     return;
                 }
                 Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;
-                objRt = (layer3DDataset.Dataset as DatasetVector).GetRecordset(true, CursorType.Dynamic);
+                objRt = (layer3DDataset.Dataset as DatasetVector).GetRecordset(false, CursorType.Dynamic);
+                foreach (DataGridViewRow row in dg_Data.Rows)
+                {
+                    int id = Convert.ToInt32(row.HeaderCell.Value);
+                    if (objRt.SeekID(id) && objRt.Edit())
+                    {
+                        foreach (DataGridViewColumn column in dg_Data.Columns)
+                        {
+                            switch (objRt.GetFieldInfos()[column.Name].Type)
+                            {
+                                case FieldType.WText:
+                                    objRt.SetFieldValue(column.Name, Convert.ToString(row.Cells[column.Name].Value));
+                                    break;
+                                case FieldType.Double:
+                                    objRt.SetFieldValue(column.Name, Convert.ToDouble(row.Cells[column.Name].Value));
+                                    break;
+                                case FieldType.Int32:
+                                    objRt.SetFieldValue(column.Name, Convert.ToInt32(row.Cells[column.Name].Value));
+                                    break;
+                            }
+                        }
+                        objRt.Update();
+                    }
+                }
+                m_SceneControl.Refresh();
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
+            finally
+            {
+                objRt.Close();
+                objRt.Dispose();
+            }
+        }
 
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GetData();
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
+        }
+
+        private void GetData()
+        {
+            Recordset objRt = null;
+            try
+            {
+                dg_Data.Rows.Clear();
+                dg_Data.Columns.Clear();
+                if (chkTheme.SelectedItem == null)
+                {
+                    m_Application.MessageBox.Show("请选择要编辑的数据！");
+                    return;
+                }
+                Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;
+                objRt = (layer3DDataset.Dataset as DatasetVector).GetRecordset(false, CursorType.Static);
+                for (int i = 0; i < objRt.FieldCount; i++)
+                {
+                    FieldInfo fieldInfo = objRt.GetFieldInfos()[i];
+                    if (fieldInfo.Caption.ToLower().Contains("sm"))
+                    {
+                        continue;
+                    }
+                    dg_Data.Columns.Add(fieldInfo.Name, fieldInfo.Caption);
+                }
+
+                objRt.MoveFirst();
+                while (!objRt.IsEOF)
+                {
+                    DataGridViewRow row = new DataGridViewRow();
+                    row.HeaderCell.Value = objRt.GetID().ToString();
+                    for (int j = 0; j < dg_Data.ColumnCount; j++)
+                    {
+                        DataGridViewTextBoxCell textBoxCell = new DataGridViewTextBoxCell
+                        {
+                            Value = Convert.ToString(objRt.GetFieldValue(dg_Data.Columns[j].Name))
+                        };
+                        row.Cells.Add(textBoxCell);
+                    }
+                    dg_Data.Rows.Add(row);
+
+                    objRt.MoveNext();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
+            finally
+            {
+                objRt.Close();
+                objRt.Dispose();
+            }
+        }
+
+        private void dg_Data_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                if (chkTheme.SelectedItem == null)
+                {
+                    m_Application.MessageBox.Show("请选择要编辑的数据！");
+                    return;
+                }
+                Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;
+                layer3DDataset.Selection.Add(Convert.ToInt32(dg_Data.Rows[e.RowIndex].HeaderCell.Value));
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
+        }
+
+        private void dg_Data_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            Recordset objRt = null;
+
+            try
+            {
+                if (chkTheme.SelectedItem == null)
+                {
+                    m_Application.MessageBox.Show("请选择要编辑的数据！");
+                    return;
+                }
+                Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;
+                objRt = (layer3DDataset.Dataset as DatasetVector).GetRecordset(false, CursorType.Dynamic);
+                int index = Convert.ToInt32(e.Row.HeaderCell.Value);
+                if (objRt.SeekID(index))
+                {
+                    if (m_Application.MessageBox.Show("要删除第【" + index.ToString() + "】条数据吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        objRt.Delete();
+                        objRt.Update();
+                    }
+                    else
+                    {
+                        e.Cancel = true;
+                    }
+                }
+                m_SceneControl.Refresh();
             }
             catch (Exception ex)
             {
