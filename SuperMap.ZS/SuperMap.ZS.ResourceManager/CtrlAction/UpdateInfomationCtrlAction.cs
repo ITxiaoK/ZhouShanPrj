@@ -1,4 +1,4 @@
-﻿using SuperMap.Desktop;
+﻿ using SuperMap.Desktop;
 using SuperMap.ZS.Common;
 using System;
 using System.Collections.Generic;
@@ -47,7 +47,29 @@ namespace SuperMap.ZS.ResourceManager
         {
             try
             {
-                m_Application.MessageBox.Show("未实现的功能");
+                if (!CommonPars.WorkspaceOpen)
+                {
+                    Application.ActiveApplication.MessageBox.Show("未打开工程！");
+                    return;
+                }
+                if (Application.ActiveApplication.MainForm.FormManager.Count == 0)
+                {
+                    Application.ActiveApplication.MessageBox.Show("未打开场景！");
+                    return;
+                }
+                else if (!(Application.ActiveApplication.MainForm.FormManager.ActiveForm is IFormScene))
+                {
+                    Application.ActiveApplication.MessageBox.Show("未打开场景！");
+                    return;
+                }
+                else
+                {
+                    IDockBar dockBar = Application.ActiveApplication.MainForm.DockBarManager[typeof(UpdateInfomationControl)];
+                    if (dockBar != null)
+                    {
+                        dockBar.Visible = true;
+                    }
+                }
             }
             catch (Exception ex)
             {
