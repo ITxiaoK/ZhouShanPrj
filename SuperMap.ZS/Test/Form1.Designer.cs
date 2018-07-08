@@ -40,7 +40,11 @@
             this.btnCommitWorkspace = new System.Windows.Forms.Button();
             this.btnDeleteWorkspace = new System.Windows.Forms.Button();
             this.btnDownWorkspace = new System.Windows.Forms.Button();
+            this.btnLoadExcel = new System.Windows.Forms.Button();
+            this.dg_data = new System.Windows.Forms.DataGridView();
+            this.btnSaveExcel = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_data)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_TestDataSource
@@ -159,11 +163,43 @@
             this.btnDownWorkspace.UseVisualStyleBackColor = true;
             this.btnDownWorkspace.Click += new System.EventHandler(this.btnDownWorkspace_Click);
             // 
+            // btnLoadExcel
+            // 
+            this.btnLoadExcel.Location = new System.Drawing.Point(220, 12);
+            this.btnLoadExcel.Name = "btnLoadExcel";
+            this.btnLoadExcel.Size = new System.Drawing.Size(156, 23);
+            this.btnLoadExcel.TabIndex = 11;
+            this.btnLoadExcel.Text = "加载Excel";
+            this.btnLoadExcel.UseVisualStyleBackColor = true;
+            this.btnLoadExcel.Click += new System.EventHandler(this.btnLoadExcel_Click);
+            // 
+            // dg_data
+            // 
+            this.dg_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_data.Location = new System.Drawing.Point(500, 244);
+            this.dg_data.Name = "dg_data";
+            this.dg_data.RowTemplate.Height = 23;
+            this.dg_data.Size = new System.Drawing.Size(300, 181);
+            this.dg_data.TabIndex = 12;
+            // 
+            // btnSaveExcel
+            // 
+            this.btnSaveExcel.Location = new System.Drawing.Point(220, 41);
+            this.btnSaveExcel.Name = "btnSaveExcel";
+            this.btnSaveExcel.Size = new System.Drawing.Size(156, 23);
+            this.btnSaveExcel.TabIndex = 13;
+            this.btnSaveExcel.Text = "保存Excel";
+            this.btnSaveExcel.UseVisualStyleBackColor = true;
+            this.btnSaveExcel.Click += new System.EventHandler(this.btnSaveExcel_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnSaveExcel);
+            this.Controls.Add(this.dg_data);
+            this.Controls.Add(this.btnLoadExcel);
             this.Controls.Add(this.btnDownWorkspace);
             this.Controls.Add(this.btnDeleteWorkspace);
             this.Controls.Add(this.btnCommitWorkspace);
@@ -180,6 +216,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_data)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,6 +236,9 @@
         private System.Windows.Forms.Button btnCommitWorkspace;
         private System.Windows.Forms.Button btnDeleteWorkspace;
         private System.Windows.Forms.Button btnDownWorkspace;
+        private System.Windows.Forms.Button btnLoadExcel;
+        private System.Windows.Forms.DataGridView dg_data;
+        private System.Windows.Forms.Button btnSaveExcel;
     }
 }
 

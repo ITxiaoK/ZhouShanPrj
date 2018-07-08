@@ -46,6 +46,11 @@ namespace SuperMap.ZS.Common
         /// 屏幕提示类型，默认是窗口轮播图形式。
         /// </summary>
         public static ScreenTipType ScreenTipType { get; set; } = ScreenTipType.Window;
+
+        /// <summary>
+        /// 打开数据是否为舟山数据，默认为false。
+        /// </summary>
+        public static bool IsZhouShanData { get; set; } = false;
     }
 
     /// <summary>

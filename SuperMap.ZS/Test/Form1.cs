@@ -153,5 +153,42 @@ namespace Test
         {
             lblResult.Text = (e.ProgressPercentage * 100) + "%";
         }
+
+        private void btnLoadExcel_Click(object sender, EventArgs e)
+        {
+            ExcelHelper excel = new ExcelHelper();
+            DataTable dt = excel.FromFile(@"e:\test2.xlsx");
+            dg_data.DataSource = dt;
+        }
+
+        private void btnSaveExcel_Click(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            dt.TableName = "myTable";
+            dt.Columns.Add("名称");
+            dt.Columns.Add("成绩");
+            dt.Columns.Add("评分");
+
+            DataRow row1 = dt.NewRow();
+            row1[0] = "张三";
+            row1[1] = "79";
+            row1[2] = "二";
+            dt.Rows.Add(row1);
+            DataRow row2 = dt.NewRow();
+            row2[0] = "李四";
+            row2[1] = "27";
+            row2[2] = "五";
+            dt.Rows.Add(row2);
+            DataRow row3 = dt.NewRow();
+            row3[0] = "王五";
+            row3[1] = "47";
+            row3[2] = "一";
+            dt.Rows.Add(row3);
+            DataSet ds = new DataSet();
+            ds.Tables.Add(dt);
+
+            ExcelHelper excel = new ExcelHelper();
+            lblResult.Text = excel.ToFile(ds, @"e:\test2.xlsx").ToString();
+        }
     }
 }

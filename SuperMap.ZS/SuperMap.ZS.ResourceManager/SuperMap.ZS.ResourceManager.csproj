@@ -107,7 +107,6 @@
       <Link>SuperMap.ZS.Startup.config</Link>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Controls\DeviceLocationControl.resx">
       <DependentUpon>DeviceLocationControl.cs</DependentUpon>

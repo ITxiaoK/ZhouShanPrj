@@ -43,6 +43,33 @@ namespace SuperMap.ZS.Startup
             try
             {
                 CommonPars.WorkspaceOpen = true;
+                if (e.Workspace.Datasources.Contains("Resource") && 
+                    e.Workspace.Datasources.Contains("SpaceData") && 
+                    e.Workspace.Datasources.Contains("CommonData") && 
+                    e.Workspace.Scenes.IndexOf("scene") != -1)
+                {
+                    CommonPars.IsZhouShanData = true;
+                    foreach (var tab in Application.ActiveApplication.MainForm.RibbonManager.Tabs)
+                    {
+                        if (tab.Text.Equals("舟山国储三维信息管理系统"))
+                        {
+                            tab.Visible = true;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    CommonPars.IsZhouShanData = false;
+                    foreach (var tab in Application.ActiveApplication.MainForm.RibbonManager.Tabs)
+                    {
+                        if (tab.Text.Equals("舟山国储三维信息管理系统"))
+                        {
+                            tab.Visible = false;
+                            break;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

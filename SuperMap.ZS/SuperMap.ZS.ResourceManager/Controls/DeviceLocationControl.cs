@@ -79,8 +79,11 @@ namespace SuperMap.ZS.ResourceManager
             }
             finally
             {
-                objRt.Close();
-                objRt.Dispose();
+                if (objRt != null)
+                {
+                    objRt.Close();
+                    objRt.Dispose();
+                }
             }
         }
 
@@ -146,8 +149,11 @@ namespace SuperMap.ZS.ResourceManager
             }
             finally
             {
-                objRt.Close();
-                objRt.Dispose();
+                if (objRt != null)
+                {
+                    objRt.Close();
+                    objRt.Dispose();
+                }
             }
         }
 
@@ -185,8 +191,11 @@ namespace SuperMap.ZS.ResourceManager
             }
             finally
             {
-                objRt.Close();
-                objRt.Dispose();
+                if (objRt != null)
+                {
+                    objRt.Close();
+                    objRt.Dispose();
+                }
             }
         }
 
@@ -229,8 +238,11 @@ namespace SuperMap.ZS.ResourceManager
             }
             finally
             {
-                objRt.Close();
-                objRt.Dispose();
+                if (objRt != null)
+                {
+                    objRt.Close();
+                    objRt.Dispose();
+                }
             }
         }
     }

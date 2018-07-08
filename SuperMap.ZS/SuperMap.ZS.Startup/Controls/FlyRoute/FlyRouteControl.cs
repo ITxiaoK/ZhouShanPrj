@@ -171,8 +171,11 @@ namespace SuperMap.ZS.Startup
             }
             finally
             {
-                objRt.Close();
-                objRt.Dispose();
+                if (objRt != null)
+                {
+                    objRt.Close();
+                    objRt.Dispose();
+                }
             }
         }
 
