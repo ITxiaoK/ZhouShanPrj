@@ -35,14 +35,15 @@
             this.chkTypeData = new System.Windows.Forms.CheckedListBox();
             this.btnExportOK = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnImportOK = new System.Windows.Forms.Button();
-            this.btnSelectFile = new System.Windows.Forms.Button();
-            this.txtFilePath = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.dgv_Data = new System.Windows.Forms.DataGridView();
             this.colTableName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFieldID = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colFieldName = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.btnImportOK = new System.Windows.Forms.Button();
+            this.btnSelectFile = new System.Windows.Forms.Button();
+            this.txtFilePath = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.groupBoxExport.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Data)).BeginInit();
@@ -134,6 +135,39 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "设备信息设置";
             // 
+            // dgv_Data
+            // 
+            this.dgv_Data.AllowUserToAddRows = false;
+            this.dgv_Data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgv_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colTableName,
+            this.colFieldID,
+            this.colFieldName});
+            this.dgv_Data.Location = new System.Drawing.Point(6, 57);
+            this.dgv_Data.Name = "dgv_Data";
+            this.dgv_Data.RowHeadersVisible = false;
+            this.dgv_Data.RowTemplate.Height = 23;
+            this.dgv_Data.Size = new System.Drawing.Size(272, 187);
+            this.dgv_Data.TabIndex = 6;
+            // 
+            // colTableName
+            // 
+            this.colTableName.HeaderText = "数据表名";
+            this.colTableName.Name = "colTableName";
+            this.colTableName.ReadOnly = true;
+            // 
+            // colFieldID
+            // 
+            this.colFieldID.HeaderText = "编码字段";
+            this.colFieldID.Name = "colFieldID";
+            // 
+            // colFieldName
+            // 
+            this.colFieldName.HeaderText = "名称字段";
+            this.colFieldName.Name = "colFieldName";
+            // 
             // btnImportOK
             // 
             this.btnImportOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -175,38 +209,11 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "导入文件：";
             // 
-            // dgv_Data
+            // backgroundWorker
             // 
-            this.dgv_Data.AllowUserToAddRows = false;
-            this.dgv_Data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgv_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colTableName,
-            this.colFieldID,
-            this.colFieldName});
-            this.dgv_Data.Location = new System.Drawing.Point(6, 57);
-            this.dgv_Data.Name = "dgv_Data";
-            this.dgv_Data.RowHeadersVisible = false;
-            this.dgv_Data.RowTemplate.Height = 23;
-            this.dgv_Data.Size = new System.Drawing.Size(272, 187);
-            this.dgv_Data.TabIndex = 6;
-            // 
-            // colTableName
-            // 
-            this.colTableName.HeaderText = "数据表名";
-            this.colTableName.Name = "colTableName";
-            this.colTableName.ReadOnly = true;
-            // 
-            // colFieldID
-            // 
-            this.colFieldID.HeaderText = "编码字段";
-            this.colFieldID.Name = "colFieldID";
-            // 
-            // colFieldName
-            // 
-            this.colFieldName.HeaderText = "名称字段";
-            this.colFieldName.Name = "colFieldName";
+            this.backgroundWorker.WorkerReportsProgress = true;
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
             // UpdateInfomationControl
             // 
@@ -242,5 +249,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTableName;
         private System.Windows.Forms.DataGridViewComboBoxColumn colFieldID;
         private System.Windows.Forms.DataGridViewComboBoxColumn colFieldName;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
     }
 }

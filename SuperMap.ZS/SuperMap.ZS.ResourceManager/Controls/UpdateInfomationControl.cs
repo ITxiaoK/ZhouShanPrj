@@ -12,6 +12,7 @@ using System.Diagnostics;
 using SuperMap.Desktop;
 using SuperMap.Data;
 using SuperMap.ZS.Data;
+using System.Threading;
 
 namespace SuperMap.ZS.ResourceManager
 {
@@ -20,6 +21,7 @@ namespace SuperMap.ZS.ResourceManager
         private Desktop.Application m_Application;
         private DesktopSceneControl m_SceneControl;
         private List<ResourceTypeData> m_lstTypeData;
+        private MessageTipForm m_TipForm;
 
         public UpdateInfomationControl()
         {
@@ -301,9 +303,67 @@ namespace SuperMap.ZS.ResourceManager
                 }
                 if (!isEmpty)
                 {
-                    if (m_Application.MessageBox.Show("导入数据会覆盖当前已有数据，是否继续？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    if (m_Application.MessageBox.Show("导入数据会覆盖当前已有数据，是否继续？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
                     {
+                        return;
+                    }
+                }
+                backgroundWorker.RunWorkerAsync(); // 运行 backgroundWorker 组件
 
+                MessageTipForm form = new MessageTipForm(backgroundWorker);// 显示进度条窗体
+                form.ShowDialog(this);
+                form.Close();
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Error != null)
+                {
+                    MessageBox.Show(e.Error.Message);
+                }
+                else if (e.Cancelled)
+                {
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
+        }
+
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                BackgroundWorker worker = sender as BackgroundWorker;
+                string title = "任务进度({0}/{1})：";
+                for (int i = 0; i < dgv_Data.Rows.Count; i++)
+                {
+                    DataTable dt = dgv_Data.Rows[i].Tag as DataTable;
+                    for (int j = 0; j < dt.Rows.Count; j++)
+                    {
+                        DataRow row = dt.Rows[j];
+
+                        //填充数据处理
+
+                        double value = (Convert.ToDouble(j) / dt.Rows.Count) * 100.0;
+                        worker.ReportProgress((int)value, string.Format(title, (i + 1).ToString(), dgv_Data.Rows.Count.ToString()));
+                        if (worker.CancellationPending)  // 如果用户取消则跳出处理数据代码 
+                        {
+                            e.Cancel = true;
+                            break;
+                        }
                     }
                 }
             }

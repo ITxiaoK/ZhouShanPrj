@@ -91,6 +91,12 @@
     <Compile Include="Controls\DeviceLocationControl.Designer.cs">
       <DependentUpon>DeviceLocationControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MessageTipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\MessageTipForm.Designer.cs">
+      <DependentUpon>MessageTipForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UpdateInfomationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -110,6 +116,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\DeviceLocationControl.resx">
       <DependentUpon>DeviceLocationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MessageTipForm.resx">
+      <DependentUpon>MessageTipForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UpdateInfomationControl.resx">
       <DependentUpon>UpdateInfomationControl.cs</DependentUpon>
