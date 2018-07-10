@@ -307,6 +307,11 @@ namespace SuperMap.ZS.ResourceManager
                     {
                         return;
                     }
+                    else
+                    {
+                        //删除数据集
+                        m_Application.MessageBox.Show("请添加删除功能");
+                    }
                 }
                 backgroundWorker.RunWorkerAsync(); // 运行 backgroundWorker 组件
 
@@ -344,6 +349,7 @@ namespace SuperMap.ZS.ResourceManager
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            m_Application.MessageBox.Show("请添加数据导入功能");
             try
             {
                 BackgroundWorker worker = sender as BackgroundWorker;
