@@ -19,12 +19,26 @@ namespace SuperMap.ZS.ResourceManager
     {
         private Desktop.Application m_Application;
         private DesktopSceneControl m_SceneControl;
-        private List<DeviceTypeData> m_lstData;
+        private List<ResourceTypeData> m_lstData;
 
         public DeviceLocationControl()
         {
             InitializeComponent();
             m_Application = Desktop.Application.ActiveApplication;
+            m_Application.Workspace.Closed += Workspace_Closed;
+        }
+
+        private void Workspace_Closed(object sender, WorkspaceClosedEventArgs args)
+        {
+            try
+            {
+                cmbDeviceType.DataSource = null;
+                dg_Data.Rows.Clear();
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
         }
 
         private void btnScreenTip_Click(object sender, EventArgs e)
@@ -49,7 +63,7 @@ namespace SuperMap.ZS.ResourceManager
             {
                 if (m_lstData == null)
                 {
-                    m_lstData = new List<DeviceTypeData>();
+                    m_lstData = new List<ResourceTypeData>();
                 }
                 if (m_Application.MainForm.FormManager.ActiveForm is IFormScene formScene)
                 {
@@ -59,12 +73,13 @@ namespace SuperMap.ZS.ResourceManager
                 objRt.MoveFirst();
                 while (!objRt.IsEOF)
                 {
-                    DeviceTypeData data = new DeviceTypeData
+                    ResourceTypeData data = new ResourceTypeData
                     {
-                        ResourceName = Convert.ToString(objRt.GetFieldValue("SourceName")),
-                        ResourceTableName = Convert.ToString(objRt.GetFieldValue("TableName")),
-                        FieldID = string.IsNullOrEmpty(Convert.ToString(objRt.GetFieldValue("TableField"))) ? null : Convert.ToString(objRt.GetFieldValue("TableField")).Split(',')[0],
-                        FieldName = string.IsNullOrEmpty(Convert.ToString(objRt.GetFieldValue("TableField"))) ? null : Convert.ToString(objRt.GetFieldValue("TableField")).Split(',')[1],
+                        Caption = Convert.ToString(objRt.GetFieldValue("SourceName")),
+                        Name = Convert.ToString(objRt.GetFieldValue("SourceID")),
+                        FieldID = Convert.ToString(objRt.GetFieldValue("TableField"))?.Split(',')[0],
+                        FieldName = Convert.ToString(objRt.GetFieldValue("TableField"))?.Split(',')[1],
+                        DatasetName = Convert.ToString(objRt.GetFieldValue("TableName")),
                     };
 
                     m_lstData.Add(data);
@@ -93,7 +108,7 @@ namespace SuperMap.ZS.ResourceManager
             {
                 cmbDeviceType.DataSource = null;
                 cmbDeviceType.DataSource = m_lstData;
-                cmbDeviceType.DisplayMember = "ResourceName";
+                cmbDeviceType.DisplayMember = "Caption";
                 if (cmbDeviceType.Items.Count > 0)
                 {
                     cmbDeviceType.SelectedIndex = 0;
@@ -110,9 +125,17 @@ namespace SuperMap.ZS.ResourceManager
             Recordset objRt = null;
             try
             {
+                if (cmbDeviceType.SelectedItem == null)
+                {
+                    return;
+                }
+                ResourceTypeData data = cmbDeviceType.SelectedItem as ResourceTypeData;
+                if (!m_Application.Workspace.Datasources["Resource"].Datasets.Contains(data.DatasetName))
+                {
+                    return;
+                }
                 dg_Data.Rows.Clear();
-                DeviceTypeData data = cmbDeviceType.SelectedItem as DeviceTypeData;
-                objRt = (m_Application.Workspace.Datasources["Resource"].Datasets[data.ResourceTableName] as DatasetVector).GetRecordset(false, CursorType.Static);
+                objRt = (m_Application.Workspace.Datasources["Resource"].Datasets[data.DatasetName] as DatasetVector).GetRecordset(false, CursorType.Static);
                 objRt.MoveFirst();
                 while (!objRt.IsEOF)
                 {
@@ -164,8 +187,8 @@ namespace SuperMap.ZS.ResourceManager
             try
             {
                 DataGridViewRow row = dg_Data.Rows[e.RowIndex];
-                DeviceTypeData data = cmbDeviceType.SelectedItem as DeviceTypeData;
-                objRt = (m_Application.Workspace.Datasources["Resource"].Datasets[data.ResourceTableName] as DatasetVector).GetRecordset(false, CursorType.Static);
+                ResourceTypeData data = cmbDeviceType.SelectedItem as ResourceTypeData;
+                objRt = (m_Application.Workspace.Datasources["Resource"].Datasets[data.DatasetName] as DatasetVector).GetRecordset(false, CursorType.Static);
                 if (objRt.SeekID(Convert.ToInt32(row.Tag)))
                 {
                     double lon = Convert.ToDouble(objRt.GetFieldValue("Longitude"));
@@ -212,8 +235,8 @@ namespace SuperMap.ZS.ResourceManager
                     return;
                 }
                 DataGridViewRow row = dg_Data.SelectedRows[0];
-                DeviceTypeData data = cmbDeviceType.SelectedItem as DeviceTypeData;
-                objRt = (m_Application.Workspace.Datasources["Resource"].Datasets[data.ResourceTableName] as DatasetVector).GetRecordset(false, CursorType.Dynamic);
+                ResourceTypeData data = cmbDeviceType.SelectedItem as ResourceTypeData;
+                objRt = (m_Application.Workspace.Datasources["Resource"].Datasets[data.DatasetName] as DatasetVector).GetRecordset(false, CursorType.Dynamic);
                 if (objRt.SeekID(Convert.ToInt32(row.Tag)) && objRt.Edit())
                 {
                     objRt.SetFieldValue("Longitude", m_SceneControl.Scene.Camera.Longitude);
@@ -245,16 +268,5 @@ namespace SuperMap.ZS.ResourceManager
                 }
             }
         }
-    }
-
-    internal class DeviceTypeData
-    {
-        internal string ResourceName { get; set; }
-
-        internal string ResourceTableName { get; set; }
-
-        internal string FieldID { get; set; }
-
-        internal string FieldName { get; set; }
     }
 }

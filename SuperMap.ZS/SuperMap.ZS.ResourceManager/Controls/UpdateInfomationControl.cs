@@ -21,12 +21,26 @@ namespace SuperMap.ZS.ResourceManager
         private Desktop.Application m_Application;
         private DesktopSceneControl m_SceneControl;
         private List<ResourceTypeData> m_lstTypeData;
-        private MessageTipForm m_TipForm;
 
         public UpdateInfomationControl()
         {
             InitializeComponent();
             m_Application = Desktop.Application.ActiveApplication;
+            m_Application.Workspace.Closed += Workspace_Closed;
+        }
+
+        private void Workspace_Closed(object sender, WorkspaceClosedEventArgs args)
+        {
+            try
+            {
+                chkTypeData.DataSource = null;
+                txtFilePath.Text = "";
+                dgv_Data.Rows.Clear();
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
         }
 
         private void btnScreenTip_Click(object sender, EventArgs e)
@@ -378,18 +392,5 @@ namespace SuperMap.ZS.ResourceManager
                 Log.OutputBox(ex);
             }
         }
-    }
-
-    class ResourceTypeData
-    {
-        public string Name { get; set; }
-
-        public string Caption { get; set; }
-
-        public string FieldID { get; set; }
-
-        public string FieldName { get; set; }
-
-        public string DatasetName { get; set; }
     }
 }

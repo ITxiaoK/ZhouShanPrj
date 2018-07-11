@@ -103,6 +103,7 @@
     <Compile Include="Controls\MessageTipForm.Designer.cs">
       <DependentUpon>MessageTipForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ResourceTypeData.cs" />
     <Compile Include="Controls\UpdateInfomationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

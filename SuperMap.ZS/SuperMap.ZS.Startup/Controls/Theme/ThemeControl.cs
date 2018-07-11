@@ -18,6 +18,7 @@ namespace SuperMap.ZS.Startup
 {
     public partial class ThemeControl : UserControl
     {
+        private const string Message = "请选择要编辑的数据！";
         private Desktop.Application m_Application;
         private DesktopSceneControl m_SceneControl;
         
@@ -25,6 +26,20 @@ namespace SuperMap.ZS.Startup
         {
             InitializeComponent();
             m_Application = Desktop.Application.ActiveApplication;
+            m_Application.Workspace.Closed += Workspace_Closed;
+        }
+
+        private void Workspace_Closed(object sender, WorkspaceClosedEventArgs args)
+        {
+            try
+            {
+                chkTheme.DataSource = null;
+                dg_Data.Rows.Clear();
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
         }
 
         private void btnScreenTip_Click(object sender, EventArgs e)
@@ -47,7 +62,7 @@ namespace SuperMap.ZS.Startup
             {
                 if (chkTheme.SelectedItem == null)
                 {
-                    m_Application.MessageBox.Show("请选择要编辑的数据！");
+                    m_Application.MessageBox.Show(Message);
                     return;
                 }
                 Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;
@@ -99,7 +114,7 @@ namespace SuperMap.ZS.Startup
             {
                 if (chkTheme.SelectedItem == null)
                 {
-                    m_Application.MessageBox.Show("请选择要编辑的数据！");
+                    m_Application.MessageBox.Show(Message);
                     return;
                 }
                 dg_Data.Rows.Clear();
@@ -136,6 +151,10 @@ namespace SuperMap.ZS.Startup
         {
             try
             {
+                if (chkTheme.SelectedItem == null)
+                {
+                    return;
+                }
                 GetData();
             }
             catch (Exception ex)
@@ -168,7 +187,7 @@ namespace SuperMap.ZS.Startup
             {
                 if (chkTheme.SelectedItem == null)
                 {
-                    m_Application.MessageBox.Show("请选择要编辑的数据！");
+                    m_Application.MessageBox.Show(Message);
                     return;
                 }
                 Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;
@@ -233,7 +252,7 @@ namespace SuperMap.ZS.Startup
                 dg_Data.Columns.Clear();
                 if (chkTheme.SelectedItem == null)
                 {
-                    m_Application.MessageBox.Show("请选择要编辑的数据！");
+                    m_Application.MessageBox.Show(Message);
                     return;
                 }
                 Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;
@@ -286,7 +305,7 @@ namespace SuperMap.ZS.Startup
             {
                 if (chkTheme.SelectedItem == null)
                 {
-                    m_Application.MessageBox.Show("请选择要编辑的数据！");
+                    m_Application.MessageBox.Show(Message);
                     return;
                 }
                 Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;
@@ -306,7 +325,7 @@ namespace SuperMap.ZS.Startup
             {
                 if (chkTheme.SelectedItem == null)
                 {
-                    m_Application.MessageBox.Show("请选择要编辑的数据！");
+                    m_Application.MessageBox.Show(Message);
                     return;
                 }
                 Layer3DDataset layer3DDataset = (chkTheme.SelectedItem as Label).Tag as Layer3DDataset;

@@ -26,6 +26,19 @@ namespace SuperMap.ZS.Startup
         {
             InitializeComponent();
             m_Application = Desktop.Application.ActiveApplication;
+            m_Application.Workspace.Closed += Workspace_Closed;
+        }
+
+        private void Workspace_Closed(object sender, WorkspaceClosedEventArgs args)
+        {
+            try
+            {
+                chkFlyRoute.DataSource = null;
+            }
+            catch (Exception ex)
+            {
+                Log.OutputBox(ex);
+            }
         }
 
         private void btnScreenTip_Click(object sender, EventArgs e)
