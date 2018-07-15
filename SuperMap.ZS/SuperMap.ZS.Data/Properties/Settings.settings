@@ -15,7 +15,7 @@
       <Value Profile="(Default)">admin</Value>
     </Setting>
     <Setting Name="FTP_IP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.245.129</Value>
+      <Value Profile="(Default)">10.10.124.128</Value>
     </Setting>
   </Settings>
 </SettingsFile>

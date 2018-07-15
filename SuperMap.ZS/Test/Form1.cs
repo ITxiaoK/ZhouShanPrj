@@ -98,7 +98,7 @@ namespace Test
         private void btnCommitWorkspace_Click(object sender, EventArgs e)
         {
             string path = @"E:\数字工厂数据\workspace.smwu";
-            FTPController ftp = new FTPController();
+            FTPControllerForWorkspacceForWorkspace ftp = new FTPControllerForWorkspacceForWorkspace();
             ftp.OnCommitCompleted += Ftp_OnCommitCompleted;
             ftp.OnCommitProcess += Ftp_OnCommitProcess;
             if (!ftp.Exist(path))
@@ -125,7 +125,7 @@ namespace Test
         private void btnDeleteWorkspace_Click(object sender, EventArgs e)
         {
             string path = @"E:\数字工厂数据\workspace.smwu";
-            FTPController ftp = new FTPController();
+            FTPControllerForWorkspacceForWorkspace ftp = new FTPControllerForWorkspacceForWorkspace();
             if (ftp.Exist(path))
             {
                 lblResult.Text = ftp.Delete(path).ToString();
@@ -135,7 +135,7 @@ namespace Test
         private void btnDownWorkspace_Click(object sender, EventArgs e)
         {
             string path = @"E:\数字工厂数据\workspace.smwu";
-            FTPController ftp = new FTPController();
+            FTPControllerForWorkspacceForWorkspace ftp = new FTPControllerForWorkspacceForWorkspace();
             ftp.OnUpdateProcess += Ftp_OnUpdateProcess;
             ftp.OnUpdateComplete += Ftp_OnUpdateComplete;
             if (ftp.Exist(path))
@@ -157,7 +157,7 @@ namespace Test
         private void btnLoadExcel_Click(object sender, EventArgs e)
         {
             ExcelHelper excel = new ExcelHelper();
-            DataTable dt = excel.FromFile(@"e:\test2.xlsx");
+            DataSet dt = excel.FromFile(@"e:\test2.xlsx");
             dg_data.DataSource = dt;
         }
 

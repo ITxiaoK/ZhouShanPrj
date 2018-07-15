@@ -7,12 +7,12 @@ using System.Text;
 
 namespace SuperMap.ZS.SecurityManager
 {
-    class UploadFilesAction : CtrlAction
+    class FilesManagerCtrlAction : CtrlAction
     {
         private Application m_Application;
 
 #pragma warning disable CS0612 // 类型或成员已过时
-        public UploadFilesAction()
+        public FilesManagerCtrlAction()
         {
             try
             {
@@ -25,7 +25,7 @@ namespace SuperMap.ZS.SecurityManager
         }
 #pragma warning restore CS0612 // 类型或成员已过时
 
-        public UploadFilesAction(IBaseItem caller) : base(caller)
+        public FilesManagerCtrlAction(IBaseItem caller) : base(caller)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace SuperMap.ZS.SecurityManager
         }
 
 #pragma warning disable CS0612 // 类型或成员已过时
-        public UploadFilesAction(IBaseItem caller, IForm formClass) : base(caller: caller, formClass: formClass)
+        public FilesManagerCtrlAction(IBaseItem caller, IForm formClass) : base(caller: caller, formClass: formClass)
 #pragma warning restore CS0612 // 类型或成员已过时
         {
         }
@@ -64,12 +64,11 @@ namespace SuperMap.ZS.SecurityManager
                 }
                 else
                 {
-                    m_Application.MessageBox.Show("未实现的功能");
-                    //IDockBar dockBar = Application.ActiveApplication.MainForm.DockBarManager[typeof(DeviceLocationControl)];
-                    //if (dockBar != null)
-                    //{
-                    //    dockBar.Visible = true;
-                    //}
+                    IDockBar dockBar = Application.ActiveApplication.MainForm.DockBarManager[typeof(FilesManagerControl)];
+                    if (dockBar != null)
+                    {
+                        dockBar.Visible = true;
+                    }
                 }
             }
             catch (Exception ex)

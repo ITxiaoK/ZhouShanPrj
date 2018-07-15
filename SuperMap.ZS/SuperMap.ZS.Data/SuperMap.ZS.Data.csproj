@@ -70,8 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Excel\ExcelHelper.cs" />
+    <Compile Include="FTP\FTPControllerForFilesManager.cs" />
     <Compile Include="FTP\FTPHelper.cs" />
-    <Compile Include="FTP\FTPController.cs" />
+    <Compile Include="FTP\FTPControllerForWorkspace.cs" />
     <Compile Include="Mysql\BaseModel.cs" />
     <Compile Include="Mysql\DbHelperMySQL.cs" />
     <Compile Include="Mysql\Model\WorkspaceInfo.cs" />

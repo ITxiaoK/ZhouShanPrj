@@ -65,7 +65,7 @@ namespace SuperMap.ZS.Startup
                                     File.Delete(file);
                                 }
                                 m_Count = 0;
-                                FTPController ftp = new FTPController();
+                                FTPControllerForWorkspacceForWorkspace ftp = new FTPControllerForWorkspacceForWorkspace();
                                 ftp.OnUpdateComplete += Ftp_OnUpdateComplete;
                                 ftp.UpdateOriginalData(folder.SelectedPath);
                                 m_TotleCount = ftp.UpdateFilesCount;
@@ -80,7 +80,7 @@ namespace SuperMap.ZS.Startup
                     else
                     {
                         m_Count = 0;
-                        FTPController ftp = new FTPController();
+                        FTPControllerForWorkspacceForWorkspace ftp = new FTPControllerForWorkspacceForWorkspace();
                         ftp.OnUpdateComplete += Ftp_OnUpdateComplete;
                         ftp.UpdateOriginalData(folder.SelectedPath);
                         m_TotleCount = ftp.UpdateFilesCount;
@@ -105,7 +105,7 @@ namespace SuperMap.ZS.Startup
                     File.Delete(file);
                 }
                 m_Count = 0;
-                FTPController ftp = new FTPController();
+                FTPControllerForWorkspacceForWorkspace ftp = new FTPControllerForWorkspacceForWorkspace();
                 ftp.OnUpdateComplete += Ftp_OnUpdateComplete;
                 ftp.UpdateOriginalData(m_SelectFolderPath);
                 m_TotleCount = ftp.UpdateFilesCount;

@@ -58,7 +58,7 @@ namespace SuperMap.ZS.Startup
             try
             {
                 m_Count = 0;
-                FTPController ftp = new FTPController();
+                FTPControllerForWorkspacceForWorkspace ftp = new FTPControllerForWorkspacceForWorkspace();
                 ftp.OnCommitCompleted += Ftp_OnCommitCompleted;
                 ftp.OnCommitProcess += Ftp_OnCommitProcess;
                 ftp.Commit(m_WorkspacePath);

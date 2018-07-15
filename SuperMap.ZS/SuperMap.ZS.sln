@@ -16,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMap.ZS.ResourceManager", "SuperMap.ZS.ResourceManager\SuperMap.ZS.ResourceManager.csproj", "{71457B29-9CFD-4C76-8B1B-496E95072AA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMap.ZS.SecurityManager", "SuperMap.ZS.SecurityManager\SuperMap.ZS.SecurityManager.csproj", "{64F33143-D85D-4596-A42B-78D95D91B515}"
+	ProjectSection(ProjectDependencies) = postProject
+		{97C3AA1F-5A35-401C-8FC5-09F7E11F5B3C} = {97C3AA1F-5A35-401C-8FC5-09F7E11F5B3C}
+		{2692FD42-446C-4A1D-8A63-395C78CDB9EF} = {2692FD42-446C-4A1D-8A63-395C78CDB9EF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

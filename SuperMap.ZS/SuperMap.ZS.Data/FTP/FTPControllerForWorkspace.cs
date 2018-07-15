@@ -8,9 +8,9 @@ using System.Text;
 namespace SuperMap.ZS.Data
 {
     /// <summary>
-    /// FTP控制器，主要用于文件及文件夹的提交与更新
+    /// FTP控制器，主要用于工作空间文件及文件夹的提交与更新
     /// </summary>
-    public class FTPController
+    public class FTPControllerForWorkspacceForWorkspace
     {
         private FTPHelper m_ftp = new FTPHelper(new Uri("ftp://" + Properties.Settings.Default.FTP_IP), Properties.Settings.Default.FTP_User, Properties.Settings.Default.FTP_Password);
         private string m_CurrentPath = "";

@@ -79,6 +79,7 @@ namespace SuperMap.ZS.Data
     /// 建立目录
     /// 删除目录
     /// 文件（目录）改名
+    /// </summary>
     public class FTPHelper
     {
         #region 属性信息
@@ -1054,6 +1055,14 @@ namespace SuperMap.ZS.Data
                         return true;
                     }
                 }
+                FileStruct[] listDir = ListDirectories();
+                foreach (FileStruct dir in listDir)
+                {
+                    if (dir.Name == RemoteFileName)
+                    {
+                        return true;
+                    }
+                }
                 return false;
             }
             catch (Exception ep)
@@ -1108,7 +1117,6 @@ namespace SuperMap.ZS.Data
                     Request = OpenRequest(new Uri(this.Uri.ToString() + RemoteFileName), WebRequestMethods.Ftp.Rename);
                     Request.RenameTo = NewFileName;
                     Response = (FtpWebResponse)Request.GetResponse();
-
                 }
                 else
                 {

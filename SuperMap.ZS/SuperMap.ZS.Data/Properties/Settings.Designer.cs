@@ -74,7 +74,7 @@ namespace SuperMap.ZS.Data.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.245.129")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10.10.124.128")]
         public string FTP_IP {
             get {
                 return ((string)(this["FTP_IP"]));
