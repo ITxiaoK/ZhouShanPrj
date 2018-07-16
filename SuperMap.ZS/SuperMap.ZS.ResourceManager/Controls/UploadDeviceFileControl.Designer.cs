@@ -35,15 +35,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.gb_Device = new System.Windows.Forms.GroupBox();
             this.dgv_Data = new System.Windows.Forms.DataGridView();
+            this.colCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colDeviceID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDeviceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.cmb_DeviceType2 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txt_FilePath = new System.Windows.Forms.TextBox();
             this.btn_Select = new System.Windows.Forms.Button();
             this.btn_Upload = new System.Windows.Forms.Button();
-            this.colCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colDeviceID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDeviceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gb_Type.SuspendLayout();
             this.gb_Device.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Data)).BeginInit();
@@ -84,7 +84,7 @@
             this.gb_Type.Size = new System.Drawing.Size(220, 82);
             this.gb_Type.TabIndex = 1;
             this.gb_Type.TabStop = false;
-            this.gb_Type.Text = "接设备类型上传";
+            this.gb_Type.Text = "按设备类型上传";
             // 
             // cmb_DeviceType
             // 
@@ -119,7 +119,7 @@
             this.gb_Device.Size = new System.Drawing.Size(220, 256);
             this.gb_Device.TabIndex = 1;
             this.gb_Device.TabStop = false;
-            this.gb_Device.Text = "接单个设备上传";
+            this.gb_Device.Text = "按单个设备上传";
             // 
             // dgv_Data
             // 
@@ -138,6 +138,25 @@
             this.dgv_Data.RowTemplate.Height = 23;
             this.dgv_Data.Size = new System.Drawing.Size(220, 210);
             this.dgv_Data.TabIndex = 2;
+            // 
+            // colCheck
+            // 
+            this.colCheck.HeaderText = "选择设备";
+            this.colCheck.Name = "colCheck";
+            this.colCheck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colDeviceID
+            // 
+            this.colDeviceID.HeaderText = "设备编码";
+            this.colDeviceID.Name = "colDeviceID";
+            this.colDeviceID.ReadOnly = true;
+            // 
+            // colDeviceName
+            // 
+            this.colDeviceName.HeaderText = "设备名称";
+            this.colDeviceName.Name = "colDeviceName";
+            this.colDeviceName.ReadOnly = true;
             // 
             // label3
             // 
@@ -200,25 +219,6 @@
             this.btn_Upload.Text = "提  交";
             this.btn_Upload.UseVisualStyleBackColor = true;
             this.btn_Upload.Click += new System.EventHandler(this.btn_Upload_Click);
-            // 
-            // colCheck
-            // 
-            this.colCheck.HeaderText = "选择设备";
-            this.colCheck.Name = "colCheck";
-            this.colCheck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // colDeviceID
-            // 
-            this.colDeviceID.HeaderText = "设备编码";
-            this.colDeviceID.Name = "colDeviceID";
-            this.colDeviceID.ReadOnly = true;
-            // 
-            // colDeviceName
-            // 
-            this.colDeviceName.HeaderText = "设备名称";
-            this.colDeviceName.Name = "colDeviceName";
-            this.colDeviceName.ReadOnly = true;
             // 
             // UploadDeviceFileControl
             // 

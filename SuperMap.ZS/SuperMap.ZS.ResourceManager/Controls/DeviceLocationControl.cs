@@ -224,7 +224,6 @@ namespace SuperMap.ZS.ResourceManager
 
         private void btnGetCamera_Click(object sender, EventArgs e)
         {
-
             Recordset objRt = null;
 
             try

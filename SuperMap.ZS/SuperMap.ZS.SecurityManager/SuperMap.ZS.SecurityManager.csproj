@@ -83,13 +83,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\DangerResourceLocationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DangerResourceLocationControl.Designer.cs">
+      <DependentUpon>DangerResourceLocationControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FilesManagerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\FilesManagerControl.Designer.cs">
       <DependentUpon>FilesManagerControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MessageTipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\MessageTipForm.Designer.cs">
+      <DependentUpon>MessageTipForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UpdateDangerResourceInfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UpdateDangerResourceInfoControl.Designer.cs">
+      <DependentUpon>UpdateDangerResourceInfoControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UploadDangerResourceFileControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UploadDangerResourceFileControl.Designer.cs">
+      <DependentUpon>UploadDangerResourceFileControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtrlAction\DangerResourceLocationCtrlAction.cs" />
     <Compile Include="CtrlAction\FilesManagerCtrlAction.cs" />
+    <Compile Include="CtrlAction\UpdateDangerResourceInfoCtrlAction.cs" />
+    <Compile Include="CtrlAction\UploadDangerResourceFileCtrlAction.cs" />
     <Compile Include="DesktopPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -99,8 +126,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\DangerResourceLocationControl.resx">
+      <DependentUpon>DangerResourceLocationControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\FilesManagerControl.resx">
       <DependentUpon>FilesManagerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MessageTipForm.resx">
+      <DependentUpon>MessageTipForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UpdateDangerResourceInfoControl.resx">
+      <DependentUpon>UpdateDangerResourceInfoControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UploadDangerResourceFileControl.resx">
+      <DependentUpon>UploadDangerResourceFileControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
