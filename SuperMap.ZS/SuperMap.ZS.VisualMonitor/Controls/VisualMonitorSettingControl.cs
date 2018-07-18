@@ -31,7 +31,7 @@ namespace SuperMap.ZS.VisualMonitor
             try
             {
                 txt_Path.Text = "";
-                dgv_Data.Rows.Clear();
+                dgv_Data.DataSource = null;
             }
             catch (Exception ex)
             {

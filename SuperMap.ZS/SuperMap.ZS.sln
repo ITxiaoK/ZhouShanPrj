@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMap.ZS.SecurityManager
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMap.ZS.VisualMonitor", "SuperMap.ZS.VisualMonitor\SuperMap.ZS.VisualMonitor.csproj", "{3A7410C9-F452-4F50-8EB3-EFD7C00D719F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMap.ZS.Workflow", "SuperMap.ZS.Workflow\SuperMap.ZS.Workflow.csproj", "{1F655DA6-13A9-4DCB-A397-A686ECB5109C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,14 @@ Global
 		{3A7410C9-F452-4F50-8EB3-EFD7C00D719F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A7410C9-F452-4F50-8EB3-EFD7C00D719F}.Release|x64.ActiveCfg = Release|Any CPU
 		{3A7410C9-F452-4F50-8EB3-EFD7C00D719F}.Release|x64.Build.0 = Release|Any CPU
+		{1F655DA6-13A9-4DCB-A397-A686ECB5109C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F655DA6-13A9-4DCB-A397-A686ECB5109C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F655DA6-13A9-4DCB-A397-A686ECB5109C}.Debug|x64.ActiveCfg = Debug|x64
+		{1F655DA6-13A9-4DCB-A397-A686ECB5109C}.Debug|x64.Build.0 = Debug|x64
+		{1F655DA6-13A9-4DCB-A397-A686ECB5109C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F655DA6-13A9-4DCB-A397-A686ECB5109C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F655DA6-13A9-4DCB-A397-A686ECB5109C}.Release|x64.ActiveCfg = Release|Any CPU
+		{1F655DA6-13A9-4DCB-A397-A686ECB5109C}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
