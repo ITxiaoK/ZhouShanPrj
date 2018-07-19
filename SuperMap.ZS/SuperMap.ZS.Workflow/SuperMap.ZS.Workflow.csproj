@@ -56,6 +56,10 @@
       <HintPath>..\..\..\Bin\SuperMap.Desktop.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="SuperMap.Realspace">
+      <HintPath>..\..\..\Bin\SuperMap.Realspace.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="SuperMap.ZS.Common">
       <HintPath>..\..\..\Bin\SuperMap.ZS.Common.dll</HintPath>
       <Private>False</Private>
