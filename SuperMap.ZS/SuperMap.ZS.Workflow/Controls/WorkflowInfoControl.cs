@@ -283,19 +283,6 @@ namespace SuperMap.ZS.Workflow
                         dic.Add("Symbol", btn_SelectColor.Text + ',' + btn_SelectColor.Tag);
                         objRt.AddNew(null, dic);
                         objRt.Update();
-
-                        Layer3DDataset layer = m_SceneControl.Scene.Layers[txt_Name.Text + "@SpaceData"] as Layer3DDataset;
-                        for (int i = 0; i < (layer.Theme as Theme3DUnique).Count; i++)
-                        {
-                            Theme3DUniqueItem item = (layer.Theme as Theme3DUnique)[i];
-
-                            GeoStyle3D style = new GeoStyle3D
-                            {
-                                LineSymbolID = Convert.ToInt32(btn_SelectColor.Tag)
-                            };
-                            item.Style = style;
-                            item.IsVisible = false;
-                        }
                         break;
                     case WorkflowEditType.Edit:
                         objRt.Edit();
@@ -306,6 +293,13 @@ namespace SuperMap.ZS.Workflow
                         objRt.SetFieldValue("Symbol", btn_SelectColor.Text + ',' + btn_SelectColor.Tag);
                         objRt.Update();
                         break;
+                }
+
+                Layer3DDataset layer = m_SceneControl.Scene.Layers[txt_Name.Text + "@SpaceData"] as Layer3DDataset;
+                for (int i = 0; i < (layer.Theme as Theme3DUnique).Count; i++)
+                {
+                    Theme3DUniqueItem item = (layer.Theme as Theme3DUnique)[i];
+                    item.IsVisible = false;
                 }
                 m_Application.MessageBox.Show("保存成功！");
             }
@@ -551,6 +545,17 @@ namespace SuperMap.ZS.Workflow
 
             try
             {
+                Layer3DDataset layer = m_SceneControl.Scene.Layers[txt_Name.Text.Trim() + "@SpaceData"] as Layer3DDataset;
+                GeoStyle3D style = new GeoStyle3D
+                {
+                    LineSymbolID = Convert.ToInt32(btn_SelectColor.Tag)
+                };
+
+                Theme3DUnique theme = layer.Theme as Theme3DUnique;
+                theme.UniqueExpression = "SmID";
+                theme.DefaultStyle = style;
+                theme.Clear();
+
                 m_lstItems.Clear();
                 objRt = (m_Application.Workspace.Datasources["SpaceData"].Datasets[txt_Name.Text.Trim()] as DatasetVector).GetRecordset(false, CursorType.Static);
                 objRt.MoveFirst();
@@ -576,6 +581,15 @@ namespace SuperMap.ZS.Workflow
                         Tag = objRt.GetID()
                     };
                     m_lstItems.Add(lbl);
+
+                    Theme3DUniqueItem item = new Theme3DUniqueItem
+                    {
+                        Caption = objRt.GetID().ToString(),
+                        Style = style,
+                        IsVisible = true,
+                        Unique = objRt.GetID().ToString()
+                    };
+                    theme.Add(item);
 
                     objRt.MoveNext();
                 }
@@ -615,11 +629,17 @@ namespace SuperMap.ZS.Workflow
             Recordset objRt = null;
             try
             {
+                if (m_Application.MessageBox.Show("确定要删除【" + cmb_Workflow.Text + "】吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                {
+                    return;
+                }
                 txt_Name.Text = "";
                 rtb_Description.Text = m_Tip;
                 txt_PlaySpeed.Text = "10";
                 btn_SelectColor.Text = "Workflow";
                 rtb_Description.Font = new Font("宋体", 9F, FontStyle.Italic, GraphicsUnit.Point, 134);
+                m_lstItems.Clear();
+                lst_Items.DataSource = null;
 
                 objRt = (m_Application.Workspace.Datasources["Resource"].Datasets["ArtCraftTable"] as DatasetVector).Query("CraftName='" + cmb_Workflow.Text.Trim() + "'", CursorType.Dynamic);
                 if (objRt.RecordCount > 0)
