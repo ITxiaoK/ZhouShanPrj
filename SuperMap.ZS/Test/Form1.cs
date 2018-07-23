@@ -1,4 +1,5 @@
-﻿using SuperMap.ZS.Common;
+﻿using SuperMap.Animation;
+using SuperMap.ZS.Common;
 using SuperMap.ZS.Data;
 using System;
 using System.Collections.Generic;
@@ -189,6 +190,20 @@ namespace Test
 
             ExcelHelper excel = new ExcelHelper();
             lblResult.Text = excel.ToFile(ds, @"e:\test2.xlsx").ToString();
+        }
+
+        private void btnSaveAnimation_Click(object sender, EventArgs e)
+        {
+            Animation animation = new Animation();
+
+
+
+        }
+
+        private void btnLoadAnimation_Click(object sender, EventArgs e)
+        {
+            Animation animation = new Animation();
+            bool b = animation.FromXml(@"C:\Users\Administrator\Desktop\animationRainRender.xml");
         }
     }
 }
