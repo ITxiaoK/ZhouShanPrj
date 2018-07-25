@@ -23,17 +23,17 @@ namespace SuperMap.Animation
         /// </summary>
         Location,
         /// <summary>
-        /// 缩放。
+        /// 移动。
         /// </summary>
-        Scale,
+        Move,
         /// <summary>
-        /// 播放。
+        /// 屏幕文字。
         /// </summary>
-        Play,
+        ScreenText,
         /// <summary>
-        /// 运动。
+        /// 粒子。
         /// </summary>
-        Change,
+        Particle,
         /// <summary>
         /// 无行为。
         /// </summary>

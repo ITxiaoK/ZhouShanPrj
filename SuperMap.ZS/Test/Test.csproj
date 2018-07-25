@@ -107,10 +107,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SuperMap.Animation\SuperMap.Animation.csproj">
-      <Project>{746192c8-20ab-42e5-87e5-92c5da6ac313}</Project>
-      <Name>SuperMap.Animation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SuperMap.ZS.Common\SuperMap.ZS.Common.csproj">
       <Project>{2692FD42-446C-4A1D-8A63-395C78CDB9EF}</Project>
       <Name>SuperMap.ZS.Common</Name>

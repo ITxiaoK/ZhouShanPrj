@@ -43,8 +43,6 @@
             this.btnLoadExcel = new System.Windows.Forms.Button();
             this.dg_data = new System.Windows.Forms.DataGridView();
             this.btnSaveExcel = new System.Windows.Forms.Button();
-            this.btnSaveAnimation = new System.Windows.Forms.Button();
-            this.btnLoadAnimation = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_data)).BeginInit();
             this.SuspendLayout();
@@ -194,33 +192,11 @@
             this.btnSaveExcel.UseVisualStyleBackColor = true;
             this.btnSaveExcel.Click += new System.EventHandler(this.btnSaveExcel_Click);
             // 
-            // btnSaveAnimation
-            // 
-            this.btnSaveAnimation.Location = new System.Drawing.Point(220, 70);
-            this.btnSaveAnimation.Name = "btnSaveAnimation";
-            this.btnSaveAnimation.Size = new System.Drawing.Size(156, 23);
-            this.btnSaveAnimation.TabIndex = 13;
-            this.btnSaveAnimation.Text = "保存动画";
-            this.btnSaveAnimation.UseVisualStyleBackColor = true;
-            this.btnSaveAnimation.Click += new System.EventHandler(this.btnSaveAnimation_Click);
-            // 
-            // btnLoadAnimation
-            // 
-            this.btnLoadAnimation.Location = new System.Drawing.Point(220, 99);
-            this.btnLoadAnimation.Name = "btnLoadAnimation";
-            this.btnLoadAnimation.Size = new System.Drawing.Size(156, 23);
-            this.btnLoadAnimation.TabIndex = 13;
-            this.btnLoadAnimation.Text = "加载动画";
-            this.btnLoadAnimation.UseVisualStyleBackColor = true;
-            this.btnLoadAnimation.Click += new System.EventHandler(this.btnLoadAnimation_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnLoadAnimation);
-            this.Controls.Add(this.btnSaveAnimation);
             this.Controls.Add(this.btnSaveExcel);
             this.Controls.Add(this.dg_data);
             this.Controls.Add(this.btnLoadExcel);
@@ -263,8 +239,6 @@
         private System.Windows.Forms.Button btnLoadExcel;
         private System.Windows.Forms.DataGridView dg_data;
         private System.Windows.Forms.Button btnSaveExcel;
-        private System.Windows.Forms.Button btnSaveAnimation;
-        private System.Windows.Forms.Button btnLoadAnimation;
     }
 }
 
